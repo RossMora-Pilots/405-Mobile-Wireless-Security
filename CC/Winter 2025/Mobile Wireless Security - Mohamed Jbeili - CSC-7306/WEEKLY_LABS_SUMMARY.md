@@ -61,6 +61,7 @@ Starting from a baseline "Security: None" configuration (fully open AP `simplewi
 ### Verification
 
 Used LinSSID from `sta1-wlan0` interface to scan neighboring WLANs. Detected two networks:
+
 - `notsosimplewifi` (MAC 00:02:00:00:02:10, Channel 4, -88 dBm, PSK/CCMP)
 - `simplewifi` (MAC 00:02:00:00:00:10, Channel 1, -79 dBm, PSK/CCMP after hardening)
 
