@@ -1,0 +1,13 @@
+# Lychee link checker configuration
+# Handles URL-encoded spaces in file paths (CC/Winter%202025/...)
+
+# Exclude mailto links
+exclude_mail = true
+
+# Accept common success codes
+accept = [200, 206]
+
+# Exclude patterns that trip up on URL-encoded spaces in local paths
+exclude = [
+    "^file://.*%20",
+]

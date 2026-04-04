@@ -1,0 +1,6 @@
+artifacts/** filter=lfs diff=lfs merge=lfs -text
+images/** filter=lfs diff=lfs merge=lfs -text
+**/assignments/*.pdf filter=lfs diff=lfs merge=lfs -text
+**/screenshots/*.png filter=lfs diff=lfs merge=lfs -text
+docs/*.pdf filter=lfs diff=lfs merge=lfs -text
+*.pdf !text !filter !merge !diff

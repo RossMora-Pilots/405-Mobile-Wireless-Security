@@ -1,0 +1,42 @@
+# Build artifacts
+artifacts/
+*.log
+*.tmp
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Media (too large for GitHub, copyright — instructor-owned lecture recordings)
+*.mp4
+*.avi
+*.mkv
+*.mov
+*.webm
+
+# Executables (third-party installers)
+*.exe
+*.msi
+*.dmg
+*.pkg
+
+# OS files
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Editor
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Secrets
+.env
+*.pem
+*.key
+
+# Agent configuration (local only)
+AGENTS.md

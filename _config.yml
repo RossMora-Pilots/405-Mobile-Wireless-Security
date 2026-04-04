@@ -1,0 +1,19 @@
+title: Mobile & Wireless Security — WLAN Defense & Mobile Device Portfolio
+description: >-
+  Employer-facing portfolio showcasing 12 weeks of hands-on wireless and mobile
+  security coursework, including 3 labs (wardriving defense, Wi-Fi site survey,
+  mobile device fingerprinting) and a capstone WLAN & Mobile Security Plan.
+remote_theme: pages-themes/minimal@v0.2.0
+plugins:
+  - jekyll-remote-theme
+  - jemoji
+exclude:
+  - scripts/portfolio/
+  - templates/
+  - artifacts/
+  - lychee.toml
+  - .gitleaks.toml
+  - .gitmessage.txt
+  - AGENTS.md
+  - CONTRIBUTING.md
+  - node_modules/

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -euo pipefail
+MSG_FILE="$1"
+if [ -s "$MSG_FILE" ]; then exit 0; fi
+TEMPLATE=".gitmessage.txt"
+if [ -f "$TEMPLATE" ]; then
+  cp "$TEMPLATE" "$MSG_FILE"
+fi
