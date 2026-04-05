@@ -41,6 +41,13 @@
 > honest artifact labeling, real scripts, expanded evidence catalogs, and differentiation
 > content (vendor matrices, cost estimates, NIST cross-walks). See
 > [Remediation Status](#remediation-status) below for the complete item-by-item log.
+>
+> **Validation pass (2026-04-05):** Independent validation confirmed 31/31 items implemented.
+> Validation also discovered and fixed 4 additional defects: 1 stale "Azure AD" reference
+> in a cost table, 1 broken relative link (`../../` → `../../../`), 2 missing YAML
+> frontmatter blocks, and 17 markdownlint warnings (all resolved to 0 errors).
+> `_config.yml` description also updated to match corrected session framing.
+> [Remediation Status](#remediation-status) below for the complete item-by-item log.
 
 A hiring manager reviewing this portfolio would advance the candidate to an initial
 screen. The portfolio demonstrates **above-average structural polish, subject-matter
