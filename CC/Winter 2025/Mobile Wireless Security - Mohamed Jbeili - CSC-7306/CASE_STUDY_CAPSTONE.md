@@ -284,7 +284,7 @@ Details: [BYOD_POLICY_FRAMEWORK.md](BYOD_POLICY_FRAMEWORK.md)
 | Cost Component | Estimate (60 users) |
 |---|---|
 | Microsoft Intune (Plan 2) | $6–12/user/month ($4,320–8,640/year) |
-| Azure AD P2 / Entra ID P2 (Conditional Access) | $9/user/month ($6,480/year) |
+| Microsoft Entra ID P2 (Conditional Access) | $9/user/month ($6,480/year) |
 | Mobile Threat Defense Add-on | $3–5/user/month ($2,160–3,600/year) |
 | Professional Services (deployment + policy dev) | $20,000–40,000 |
 | **Total Year 1** | **$33,000–58,000** |

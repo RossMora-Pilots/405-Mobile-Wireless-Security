@@ -227,7 +227,7 @@ that was promised.
 `assignments/CaseStudy_Cyber_Kill_Chain_Analysis.pdf` is **2 pages containing
 screenshots of quiz completion banners**:
 
-```
+```text
 Ross Moravec - Cyber Kill Chain (Part 1) taken Jan 26th, 2025
 Ross Moravec - Networking Concepts (Part 2) taken Jan 26th, 2025
 ```
@@ -362,7 +362,8 @@ claim 12 weeks?" The `WEEKS_COVERED: 12` metric in `portfolio/config.json:14` an
 
 **Fix:** Either clarify *"12-week term with 8 instructor-led sessions + self-study
 weeks,"* or drop the "12-week" framing in favor of "8 instructor-led sessions + 3 labs
-+ 1 capstone" which is **more defensible and equally impressive**.
+
+- 1 capstone" which is **more defensible and equally impressive**.
 
 ### MEDIUM: No cost estimates or ROI on the three recommendations
 
@@ -658,17 +659,17 @@ Ranked by employer-impact-per-hour-of-work:
 
 ### Should-add (high impact, medium cost)
 
-4. **5×5 risk heat map** — visual evidence that risk-assessment methodology was
+1. **5×5 risk heat map** — visual evidence that risk-assessment methodology was
    actually applied, not just described.
-5. **Lab 1 GHostAPd before/after screenshots** — shows hands-on configuration work.
-6. **NAC vendor comparison matrix** — demonstrates vendor-landscape awareness.
+2. **Lab 1 GHostAPd before/after screenshots** — shows hands-on configuration work.
+3. **NAC vendor comparison matrix** — demonstrates vendor-landscape awareness.
 
 ### Nice-to-have (differentiation)
 
-7. **Threat-to-Control Sankey diagram** — Mermaid supports, reads impressively.
-8. **STRIDE × Attack Surface heat grid** — converts weak visualization into strong one.
-9. **Kill chain × control coverage matrix** — visual version of existing table.
-10. **MDM vendor comparison matrix** — answers the question Intune-only raises.
+1. **Threat-to-Control Sankey diagram** — Mermaid supports, reads impressively.
+2. **STRIDE × Attack Surface heat grid** — converts weak visualization into strong one.
+3. **Kill chain × control coverage matrix** — visual version of existing table.
+4. **MDM vendor comparison matrix** — answers the question Intune-only raises.
 
 ---
 
@@ -1286,17 +1287,17 @@ Ranked by employer-impact-per-hour-of-work:
 
 ### Should-add (high impact, medium cost)
 
-4. **5×5 risk heat map** — visual evidence that risk-assessment methodology was
+1. **5×5 risk heat map** — visual evidence that risk-assessment methodology was
    actually applied, not just described.
-5. **Lab 1 GHostAPd before/after screenshots** — shows hands-on configuration work.
-6. **NAC vendor comparison matrix** — demonstrates vendor-landscape awareness.
+2. **Lab 1 GHostAPd before/after screenshots** — shows hands-on configuration work.
+3. **NAC vendor comparison matrix** — demonstrates vendor-landscape awareness.
 
 ### Nice-to-have (differentiation)
 
-7. **Threat-to-Control Sankey diagram** — Mermaid supports, reads impressively.
-8. **STRIDE × Attack Surface heat grid** — converts weak visualization into strong one.
-9. **Kill chain × control coverage matrix** — visual version of existing table.
-10. **MDM vendor comparison matrix** — answers the question Intune-only raises.
+1. **Threat-to-Control Sankey diagram** — Mermaid supports, reads impressively.
+2. **STRIDE × Attack Surface heat grid** — converts weak visualization into strong one.
+3. **Kill chain × control coverage matrix** — visual version of existing table.
+4. **MDM vendor comparison matrix** — answers the question Intune-only raises.
 
 ---
 
