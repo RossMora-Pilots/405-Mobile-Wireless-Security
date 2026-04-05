@@ -45,6 +45,8 @@ flowchart LR
     style A fill:#d98880,color:#333
 ```
 
+> **Legend:** Warm-to-hot color gradient (yellow → red) tracks escalating attacker impact. Each node lists phase number, name, and representative wireless/mobile TTPs.
+
 ## Phase-by-Phase Analysis
 
 ### 1. Reconnaissance
@@ -176,6 +178,22 @@ The kill chain is not strictly linear in modern attacks — attackers may loop b
 
 Each strategic recommendation from the capstone case study ([CASE_STUDY_CAPSTONE.md](CASE_STUDY_CAPSTONE.md)) maps directly to breaking the kill chain at a specific phase. NAC breaks Delivery; MDM+Zero Trust breaks Installation + C2 + Objectives; WIPS breaks Recon + Delivery.
 
+## NIST / ISO Control Cross-Walk
+
+Each kill chain phase maps to specific controls in NIST and ISO frameworks:
+
+| Kill Chain Phase | NIST SP 800-153 (WLAN) | NIST SP 800-124r2 (Mobile) | ISO 27001:2022 | CIS Controls v8 |
+|---|---|---|---|---|
+| 1. Reconnaissance | §4.2 RF monitoring, §5.2 WLAN perimeter | §3.2 Network threat awareness | A.5.7 Threat intelligence | CIS 13.3 Network monitoring |
+| 2. Weaponization | _(off-network — no direct control)_ | §4.1 App vetting processes | A.8.28 Secure coding | CIS 2.5 Software allowlisting |
+| 3. Delivery | §5.3 Rogue AP detection, §6.1 WIPS | §3.3 Phishing awareness | A.6.3 Awareness training | CIS 14.2 Security awareness |
+| 4. Exploitation | §5.1 Firmware updates, §4.3 WPA3 | §4.2 OS patch management | A.8.8 Vulnerability mgmt | CIS 7.4 Patch management |
+| 5. Installation | §6.2 Client-side controls | §4.3 App whitelisting, §5.1 MDM | A.8.19 Software installation | CIS 2.6 App control |
+| 6. C2 | §5.4 Network monitoring | §5.2 VPN enforcement | A.8.20 Network security | CIS 13.4 Traffic filtering |
+| 7. Objectives | §6.3 Data protection | §5.3 Container/DLP | A.8.12 DLP, A.5.23 Cloud | CIS 3.12 Data protection |
+
+> **Usage:** Each row identifies which framework control breaks the attack chain at that phase. Use for compliance mapping or gap analysis during security plan reviews.
+
 ## Assessment Evidence
 
 Supplementary to the main case study writeup, two quiz submissions completed **2025-01-26** covered Cyber Kill Chain concepts:
@@ -183,7 +201,7 @@ Supplementary to the main case study writeup, two quiz submissions completed **2
 - **Part 1:** Cyber Kill Chain quiz
 - **Part 2:** Networking Concepts quiz
 
-These quiz results are archived in [assignments/CaseStudy_Cyber_Kill_Chain_Analysis.pdf](assignments/CaseStudy_Cyber_Kill_Chain_Analysis.pdf).
+These quiz results are archived in [assignments/CyberKillChain_Quiz_Evidence.pdf](assignments/CyberKillChain_Quiz_Evidence.pdf).
 
 ## References
 

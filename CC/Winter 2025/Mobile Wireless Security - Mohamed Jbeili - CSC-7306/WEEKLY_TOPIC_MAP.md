@@ -6,7 +6,7 @@ permalink: /curriculum/
 
 # 12-Week Curriculum Map — Mobile Wireless Security (CSC-7306)
 
-> 12-week curriculum mapping for wireless network defense and mobile device security.
+> 12-week term (8 instructor-led sessions) mapping for wireless network defense and mobile device security.
 
 ## Table of Contents
 
@@ -25,7 +25,7 @@ permalink: /curriculum/
 | 3 | 2025-01-22 | (No session recorded) | — | — |
 | 4 | 2025-01-29 | Mobile Threat Landscape | — | Malicious apps, smishing, jailbreak risks, BYOD exposure |
 | 5 | 2025-02-05 | Risk Assessment & Security Controls | — | NIST SP 800-30, ISO 27005, STRIDE/PASTA |
-| 6 | 2025-02-12 | Capstone: WLAN & Mobile Security Plan | [Case Study](assignments/CaseStudy_WLAN_Mobile_Security_Plan.pdf) + [Kill Chain](assignments/CaseStudy_Cyber_Kill_Chain_Analysis.pdf) + [Presentation](assignments/CaseStudy_Final_Presentation.pdf) | Vulnerability analysis, audit planning, BYOD policy, NAC/MDM/WIPS design |
+| 6 | 2025-02-12 | Capstone: WLAN & Mobile Security Plan | [Case Study](assignments/CaseStudy_WLAN_Mobile_Security_Plan.pdf) + [Kill Chain Quiz](assignments/CyberKillChain_Quiz_Evidence.pdf) + [Presentation](assignments/CaseStudy_Final_Presentation.pdf) | Vulnerability analysis, audit planning, BYOD policy, NAC/MDM/WIPS design |
 | 7 | 2025-02-19 | (Reading week / no session) | — | — |
 | 8 | 2025-03-05 | Advanced Wireless Defense | — | WPA3-SAE, PMF, 802.11w, WIPS, rogue AP containment |
 | 9 | 2025-03-12 | (No session recorded) | — | — |
@@ -103,7 +103,7 @@ Comparative analysis of passive and active device fingerprinting techniques. Use
 | Lab submissions (PDF) | [assignments/](assignments/) |
 | Capstone case study | [assignments/CaseStudy_WLAN_Mobile_Security_Plan.pdf](assignments/CaseStudy_WLAN_Mobile_Security_Plan.pdf) |
 | Capstone presentation | [assignments/CaseStudy_Final_Presentation.pdf](assignments/CaseStudy_Final_Presentation.pdf) |
-| Cyber Kill Chain quiz evidence | [assignments/CaseStudy_Cyber_Kill_Chain_Analysis.pdf](assignments/CaseStudy_Cyber_Kill_Chain_Analysis.pdf) |
+| Cyber Kill Chain quiz evidence | [assignments/CyberKillChain_Quiz_Evidence.pdf](assignments/CyberKillChain_Quiz_Evidence.pdf) |
 | Narrative portfolio documents | [Course README](README.md) and linked portfolio docs |
 
 ---

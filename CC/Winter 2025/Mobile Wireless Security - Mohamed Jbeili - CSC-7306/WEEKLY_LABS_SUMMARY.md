@@ -38,7 +38,7 @@ flowchart LR
 
 ## Lab 1 — Securing a Wireless Network from Wardriving Attacks
 
-**Week:** 2 (2025-01-15) · **Submission:** [Lab01_Wireless_Wardriving_Defense_Submission.pdf](assignments/Lab01_Wireless_Wardriving_Defense_Submission.pdf)
+**Week:** 2 (2025-01-15) · **Submission:** [Lab01_Wireless_Wardriving_Defense_Submission.pdf](assignments/Lab01_Wireless_Wardriving_Defense_Submission.pdf) · **Time on task:** 2h 10m
 
 ### Objective
 
@@ -72,6 +72,20 @@ Reviewed GHostAPd association logs to confirm `sta1-wlan0: associated` events wi
 - **MAC ACLs are weak alone.** MAC addresses are trivially spoofable. Lab exercise deliberately combined MAC ACL with WPA2-PSK to demonstrate defense-in-depth.
 - **Signal strength is a policy control.** Reducing transmit power shrinks the attack surface geographically — attackers outside the intended coverage area can't see the network.
 - **"Security: None" is a breach waiting to happen.** Even in dev/test environments, an open AP exposes the entire network segment. Minimum baseline should always be WPA2-PSK.
+
+### Advanced Exercises (from PDF submission)
+
+Beyond the core hardening exercise, Lab 1 included advanced wireless reconnaissance and challenge tasks:
+
+**Kismet Hidden-SSID Decloaking:** Used Kismet wireless sniffer to decloak hidden networks in the lab environment. Discovered `TheGatesofHeck` — a hidden SSID that did not appear in standard LinSSID scans. Kismet captured the SSID from client probe requests and data frame headers, demonstrating that SSID hiding is not a security control (it provides zero protection against a passive wireless observer with the right tooling).
+
+**WEP Network Detection:** Identified `BananaStand` broadcasting with WEP encryption — a deprecated protocol vulnerable to statistical key-recovery attacks (Fluhrer-Mantin-Shamir / PTW). This detection exercise reinforced why WEP should never appear on a production network and why automated wireless audits must flag WEP as a critical finding.
+
+**Probe Request Analysis:** Captured `youcantseeme` in probe request frames — a client device actively searching for a previously-connected hidden network. This demonstrates how Preferred Network Lists (PNLs) leak information: even when an SSID is hidden, clients broadcast it in probe requests, making the "hidden" network discoverable to any passive listener.
+
+**Challenge: Gateway Traversal Exercise:** Completed a CTF-style challenge involving the `Heck Proxy` gateway at specific coordinates. Required navigating through network obstacles using wireless positioning concepts and authentication bypass techniques (credential: `tedfoottwo`). This exercise tested both wireless positioning awareness and creative problem-solving under constrained network conditions.
+
+**Mininet-WiFi Simulation Scripting:** The lab environment used Mininet-WiFi for wireless network simulation. Configured AP positioning with `py ap1.position` commands, set antenna gain parameters, and adjusted station-to-AP associations. This hands-on simulation scripting experience translates directly to wireless lab automation and testing workflows.
 
 ## Lab 3 — Conducting a Wi-Fi Site Survey
 
@@ -115,6 +129,20 @@ Identified four access points with signal levels below acceptable thresholds:
 - **SIR matters more than raw signal.** A -70 dBm signal with -25 dB SIR is effectively unusable due to noise. Coverage is a two-dimensional problem, not a single-number threshold.
 - **Band selection drives PHY mode capabilities.** 2.4 GHz networks in this deployment used 802.11n (NETGEAR01); 5 GHz used 802.11ac (NETGEAR01-5G). Newer mobile clients benefit substantially from 5 GHz availability.
 - **Interference source identification is practical threat-hunting.** DIRECT- prefixed SSIDs (Miracast, Wi-Fi Direct printers) often indicate unmanaged devices that IT should either approve or disable.
+
+### Heatmap Visual Analysis
+
+The full heatmap visualizations are embedded in the [Lab 03 PDF submission](assignments/Lab03_WiFi_Site_Survey_Submission.pdf) (13+ screenshots). Key visual findings:
+
+**Signal-Level Heatmap (NETGEAR01-5G):** The 5 GHz AP showed strong coverage (green, -40 to -60 dBm) in the center of the survey area with a sharp falloff to yellow (-65 to -75 dBm) at the edges. The coverage pattern was roughly circular with a 15-meter effective radius at usable signal levels.
+
+**SIR Heatmap:** The most critical visualization — it revealed that the GM area right-hand side achieved +13 dB SIR (excellent, low interference) while the left side showed only +3 to +5 dB SIR (marginal). This disparity means that **signal strength alone is misleading**: both areas had similar raw RSSI values, but the left side's proximity to interfering APs (AFSISupport2G, AFSIWPA) degraded the usable signal quality. This is exactly why site survey professionals prioritize SIR over raw RSSI.
+
+**Frequency Band Comparison:** The 2.4 GHz heatmap showed broader coverage but significantly more co-channel interference (especially from `DIRECT-` prefixed SSIDs — Miracast/Wi-Fi Direct devices). The 5 GHz heatmap showed tighter coverage but cleaner spectrum — supporting the recommendation to steer capable clients to 5 GHz via band-steering policies.
+
+**Placement Recommendation (Original Analysis):** Based on the SIR data, the optimal AP placement for the GM area would be on the right side where the +13 dB SIR sweet spot exists. The left side requires either an additional AP for localized coverage or interference mitigation (channel reassignment, power adjustment on competing APs) before it can deliver reliable service.
+
+> **Note:** The heatmap images are contained in the PDF submission and are not separately extracted due to their embedded format in the Jones & Bartlett LMS export. Open the [PDF submission](assignments/Lab03_WiFi_Site_Survey_Submission.pdf) directly to view all 13+ heatmap and signal analysis screenshots.
 
 ## Lab 5 — Fingerprinting Mobile Devices
 

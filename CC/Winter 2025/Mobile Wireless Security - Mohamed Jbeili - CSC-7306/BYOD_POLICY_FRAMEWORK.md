@@ -195,7 +195,7 @@ flowchart TB
 
     subgraph ControlPlane["Control Plane"]
         MDM["MDM<br/>(Intune)"]
-        IDP["Identity Provider<br/>(Azure AD)"]
+        IDP["Identity Provider<br/>(Microsoft Entra ID)"]
         NAC["NAC<br/>(Cisco ISE)"]
         CASB["CASB"]
     end
@@ -219,6 +219,24 @@ flowchart TB
     IDP -.->|Identity| NAC
 ```
 
+## MDM Vendor Comparison
+
+Bluegreen Media evaluated three leading MDM platforms before selecting Microsoft Intune:
+
+| Capability | Microsoft Intune | VMware Workspace ONE | Jamf Pro |
+|---|---|---|---|
+| **Platforms** | iOS, Android, Windows, macOS | iOS, Android, Windows, macOS, Chrome OS | macOS, iOS (limited Android) |
+| **Deployment model** | Cloud-native (Azure) | Cloud or on-premises | Cloud-native |
+| **App containerization** | Yes (App Protection Policies) | Yes (Workspace ONE UEM) | Limited (macOS-focused) |
+| **Conditional Access** | Native (Entra ID integration) | Requires Access add-on | Requires 3rd-party IdP |
+| **Zero Trust integration** | Native via Entra ID + Defender | Workspace ONE Intelligence | Integrates with Okta/Azure |
+| **Per-app VPN** | Yes | Yes | Yes (macOS/iOS only) |
+| **BYOD MAM-only mode** | Yes (no full enrollment needed) | Yes | No |
+| **Cost model** | Per-user (bundled in M365 E3/E5) | Per-device + add-ons | Per-device |
+| **Best fit** | Microsoft-centric, mixed-OS BYOD | Large enterprise, multi-platform | Apple-first organizations |
+
+**Selection rationale:** Intune's bundled licensing with Microsoft 365, native Entra ID conditional access, and MAM-only BYOD mode make it the most cost-effective choice for a 60-employee company with mixed device types and a growth trajectory toward IPO compliance requirements.
+
 ## Implementation Phasing
 
 Four-phase rollout (from Bluegreen Media case study):
@@ -229,6 +247,21 @@ Four-phase rollout (from Bluegreen Media case study):
 | **2. Pilot** | Weeks 5-8 | Deploy to IT staff + selected test users, collect feedback, tune controls, develop metrics |
 | **3. Full Deployment** | Weeks 9-12 | Roll out to all employees, training, compliance monitoring begins, policy review cycle established |
 | **4. Ongoing Management** | Continuous | Regular compliance reviews, policy updates for emerging threats, user experience improvements |
+
+## User Experience Considerations
+
+> **UX friction is the #1 BYOD adoption killer.** Employees who find security controls disruptive will find workarounds — forwarding corporate email to personal accounts, using personal cloud storage, or simply opting out of the BYOD program entirely. Every control must be calibrated against its UX impact.
+
+| Control | UX Impact | Mitigation |
+|---|---|---|
+| MDM enrollment | Medium — privacy concerns about employer visibility | Communicate clearly what IT can/cannot see; use MAM-only mode for privacy-sensitive users |
+| App containerization | Low-Medium — separate work/personal contexts | Smooth app switching UI; ensure corporate container apps are performant |
+| Conditional access prompts | Medium — frequent MFA challenges | Use risk-based conditional access (challenge only on anomalous signals, not every login) |
+| VPN enforcement | High — battery drain, latency | Split-tunnel VPN for corporate apps only; per-app VPN to minimize always-on impact |
+| App install restrictions | Medium — perceived freedom loss | Curated enterprise app catalog with clear request process for exceptions |
+| Remote wipe capability | High — fear of personal data loss | Selective wipe policy (corporate container only for BYOD); written guarantee in enrollment agreement |
+
+**Design principle:** Security controls should be invisible when the user is compliant and proportional when intervention is needed. The goal is _secure by default, usable by design_.
 
 ## References
 

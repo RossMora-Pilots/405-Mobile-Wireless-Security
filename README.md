@@ -3,6 +3,7 @@
 [![CI](https://github.com/rossmoravec/405-Mobile-Wireless-Security/actions/workflows/ci.yml/badge.svg)](https://github.com/rossmoravec/405-Mobile-Wireless-Security/actions/workflows/ci.yml)
 [![Gitleaks](https://github.com/rossmoravec/405-Mobile-Wireless-Security/actions/workflows/gitleaks.yml/badge.svg)](https://github.com/rossmoravec/405-Mobile-Wireless-Security/actions/workflows/gitleaks.yml)
 [![Markdown Lint](https://github.com/rossmoravec/405-Mobile-Wireless-Security/actions/workflows/markdownlint.yml/badge.svg)](https://github.com/rossmoravec/405-Mobile-Wireless-Security/actions/workflows/markdownlint.yml)
+[![Pages](https://github.com/rossmoravec/405-Mobile-Wireless-Security/actions/workflows/pages.yml/badge.svg)](https://github.com/rossmoravec/405-Mobile-Wireless-Security/actions/workflows/pages.yml)
 
 > **Wireless & Mobile Security Analyst** | WLAN Threat Defense · BYOD/MDM · Zero Trust Mobile Architecture
 > Targeting roles in **Wireless Security**, **Mobile Device Security**, and **BYOD/MDM Administration**
@@ -13,7 +14,7 @@
 [![GitHub](https://img.shields.io/badge/GitHub-rossmoravec-181717?style=flat-square&logo=github&logoColor=white)](https://github.com/rossmoravec)
 [![Email](https://img.shields.io/badge/Email-ross@moravec.dev-EA4335?style=flat-square&logo=gmail&logoColor=white)](mailto:ross@moravec.dev)
 
-> 12-week hands-on curriculum covering WLAN hardening, wireless site survey methodology, mobile device fingerprinting, and a capstone WLAN & Mobile Security Plan for a fictional SMB considering an IPO.
+> 12-week term (8 instructor-led sessions) covering WLAN hardening, wireless site survey methodology, mobile device fingerprinting, and a capstone WLAN & Mobile Security Plan for a fictional SMB considering an IPO.
 
 ---
 
@@ -21,7 +22,7 @@
 
 Graduate of Cambrian College's Postgraduate Cybersecurity Certificate program with hands-on experience in **wireless network security, mobile device security, and BYOD/MDM architecture**. Skilled in WLAN threat analysis, wireless site survey methodology, device fingerprinting, and designing comprehensive security plans that integrate NAC, MDM, and WIPS controls under Zero Trust principles. **Targeting an entry-level role in wireless security analysis, mobile device security administration, or BYOD/MDM engineering** where I can apply practical defensive expertise to modern hybrid-workforce security challenges.
 
-### Why Wireless & Mobile Security?
+## Why Wireless & Mobile Security?
 
 Wireless and mobile are where *modern enterprise security actually breaks down*. The traditional hard-perimeter model assumed the wire was the boundary — WLAN obliterated that assumption, and BYOD finished the job. Every access point is an extension of the corporate network into RF space that anyone within range can probe. Every personal phone with corporate email is a tiny corporate-data vault that IT doesn't physically control. This is where defense-in-depth stops being theoretical and starts being mandatory: WPA3 + WIPS + NAC + MDM + Zero Trust conditional access aren't optional layers, they're the only way to get back to the security posture wired networks used to have for free. Understanding this stack means understanding how modern enterprise security is actually delivered — not just how it's described in textbooks.
 
@@ -80,7 +81,7 @@ This portfolio documents hands-on wireless and mobile security skills developed 
 | Capstone delivered | **Bluegreen Media WLAN & Mobile Security Plan** (3 parts + Cyber Kill Chain + Presentation) | [CASE_STUDY_CAPSTONE.md](CC/Winter%202025/Mobile%20Wireless%20Security%20-%20Mohamed%20Jbeili%20-%20CSC-7306/CASE_STUDY_CAPSTONE.md) |
 | Threats catalogued | **12** (6 WLAN + 6 mobile) with STRIDE + MITRE ATT&CK Mobile mapping | [WIRELESS_THREAT_MODEL.md](CC/Winter%202025/Mobile%20Wireless%20Security%20-%20Mohamed%20Jbeili%20-%20CSC-7306/WIRELESS_THREAT_MODEL.md) |
 | Strategic recommendations | **3** (NAC · MDM+Zero Trust · WIPS) with 16-20 week implementation plans | [CASE_STUDY_CAPSTONE.md#strategic-recommendations](CC/Winter%202025/Mobile%20Wireless%20Security%20-%20Mohamed%20Jbeili%20-%20CSC-7306/CASE_STUDY_CAPSTONE.md#strategic-recommendations) |
-| Weeks covered | **12** weeks of curriculum with progression from foundation → advanced | [WEEKLY_TOPIC_MAP.md](CC/Winter%202025/Mobile%20Wireless%20Security%20-%20Mohamed%20Jbeili%20-%20CSC-7306/WEEKLY_TOPIC_MAP.md) |
+| Weeks covered | **8** instructor-led sessions across a 12-week term with progressive skill building | [WEEKLY_TOPIC_MAP.md](CC/Winter%202025/Mobile%20Wireless%20Security%20-%20Mohamed%20Jbeili%20-%20CSC-7306/WEEKLY_TOPIC_MAP.md) |
 | Tools mastered | **7** (GHostAPd · LinSSID · Wireshark · p0f · Nmap · ClientJS · Site Survey tools) | [WEEKLY_LABS_SUMMARY.md#tool-mastery-summary](CC/Winter%202025/Mobile%20Wireless%20Security%20-%20Mohamed%20Jbeili%20-%20CSC-7306/WEEKLY_LABS_SUMMARY.md#tool-mastery-summary) |
 | CWSP exam domain coverage | **6/6** domains mapped to course work | [CWSP Alignment](CC/Winter%202025/Mobile%20Wireless%20Security%20-%20Mohamed%20Jbeili%20-%20CSC-7306/README.md#certification-alignment) |
 
@@ -200,7 +201,7 @@ flowchart LR
     style A fill:#d98880,color:#333
 ```
 
-Each course strategic recommendation breaks the chain at a specific phase:
+> **Legend:** Warm-to-hot color gradient (yellow → red) tracks escalating attacker impact across the seven kill chain phases. Each node lists phase number, abbreviated name, and representative wireless/mobile TTPs.
 
 - **NAC** breaks Delivery (unauthorized devices can't reach corporate resources)
 - **MDM + Zero Trust** breaks Installation + C2 + Objectives (no persistent foothold, no trusted lateral movement)
@@ -274,7 +275,8 @@ Three design principles that define effective wireless & mobile security:
 
 3. **Identity matters more than location on wireless.** On wired networks, being plugged into a port often implied authorization. On wireless, the port is *air* — anyone within range can try to authenticate. User-ID, 802.1X, and certificate-based device authentication shift the trust boundary from the physical to the identity layer. This is the foundational insight that makes Zero Trust coherent on wireless.
 
-## Repository Structure
+<details>
+<summary><strong>Repository Structure</strong> — click to expand</summary>
 
 ```text
 405-Mobile-Wireless-Security/
@@ -289,18 +291,39 @@ Three design principles that define effective wireless & mobile security:
 │           ├── CYBER_KILL_CHAIN_ANALYSIS.md  (kill chain applied to wireless)
 │           ├── WIRELESS_THREAT_MODEL.md      (STRIDE + ATT&CK Mobile)
 │           ├── BYOD_POLICY_FRAMEWORK.md      (MDM/NAC/Zero Trust synthesis)
-│           ├── EVIDENCE_INDEX.md             (artifact index)
+│           ├── EVIDENCE_INDEX.md             (artifact & evidence catalog)
 │           ├── SCRIPTS_README.md             (script documentation)
 │           ├── assignments/                  (6 PDF submissions)
-│           ├── screenshots/                  (evidence images)
-│           ├── scripts/                      (student-authored automation)
-│           └── scripts-extra/                (external references)
+│           └── scripts/                      (student-authored automation)
 ├── docs/                     (pilot ops: Runbook, Checklist, sessions)
 ├── portfolio/config.json     (metrics, skills, references)
 ├── .github/workflows/        (CI: ci, gitleaks, markdownlint, pages, pm-evidence, portfolio-ci)
 ├── ROADMAP.md                (Now/Next/Later + milestones)
 └── LICENSE · SECURITY.md · CONTRIBUTING.md
 ```
+
+</details>
+
+> **CI/CD:** This repository uses GitHub Actions for automated quality gates — markdown linting, secret scanning (Gitleaks), link validation, and GitHub Pages deployment. Badges at the top of this README reflect current pipeline status.
+
+## Next Steps Toward Production Experience
+
+This portfolio demonstrates academic and lab-based competency. The next phase focuses on bridging to production-grade experience:
+
+| Area | Current State | Next Milestone |
+|---|---|---|
+| **Wireless security operations** | Lab-based GHostAPd/LinSSID/Wireshark | Contribute to open-source WIPS tooling or home-lab WPA3-Enterprise deployment |
+| **MDM administration** | Policy design + Intune template authoring | Deploy Intune in a test tenant with real iOS/Android device enrollment |
+| **Penetration testing** | Conceptual knowledge of Evil Twin, KRACK | Complete Offensive Security Wireless Professional (OSWP) labs or equivalent CTF challenges |
+| **Incident response** | Kill chain mapping + control design | Participate in a wireless-focused IR tabletop exercise or blue team CTF |
+| **Certifications** | Course content aligned to CWSP domains | Pass CompTIA Security+ (SY0-701), then pursue CWNA → CWSP path |
+| **Enterprise networking** | NAC architecture design on paper | Gain hands-on experience with Cisco ISE or Aruba ClearPass in an internship or co-op |
+
+> **Availability:** Actively seeking entry-level roles in wireless security analysis, mobile device security administration, or BYOD/MDM engineering. Open to internship, co-op, or junior analyst positions.
+
+## Portfolio Context
+
+This portfolio was developed as part of Cambrian College's Postgraduate Cybersecurity Certificate program (Winter 2025). All narrative documents, threat analysis, scripts, and diagrams are original student work. PDF submissions were exported from the Jones & Bartlett Learning LMS and contain embedded lab screenshots. The repository is published on GitHub to demonstrate version control practices, CI/CD hygiene, and professional documentation skills alongside the technical security content.
 
 ## References
 

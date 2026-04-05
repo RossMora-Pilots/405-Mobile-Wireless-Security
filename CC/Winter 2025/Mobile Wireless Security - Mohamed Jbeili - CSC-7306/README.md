@@ -9,7 +9,7 @@ permalink: /course/
 [![CI](https://github.com/rossmoravec/405-Mobile-Wireless-Security/actions/workflows/ci.yml/badge.svg)](https://github.com/rossmoravec/405-Mobile-Wireless-Security/actions/workflows/ci.yml)
 
 > Ross Moravec | Cambrian College | CSC-7306 Mobile Wireless Security | Winter 2025 | Instructor: Mohamed Jbeili
-> 12-week curriculum: 3 hands-on labs, 1 capstone case study (WLAN & Mobile Security Plan), 6 wireless + 6 mobile threats analyzed.
+> 12-week term (8 instructor-led sessions): 3 hands-on labs, 1 capstone case study (WLAN & Mobile Security Plan), 6 wireless + 6 mobile threats analyzed.
 
 ## Quick Links
 
@@ -142,7 +142,7 @@ A comprehensive 3-part security plan for a fictional 60-employee social media co
 **Skills:** Vulnerability analysis methodology · Audit procedure design · NIST/ISO risk frameworks · BYOD policy tiering · NAC architecture (Cisco ISE, Aruba ClearPass, Forescout) · MDM + Zero Trust integration (Microsoft Intune) · Wireless Intrusion Prevention (WIPS).
 
 **Details:** [CASE_STUDY_CAPSTONE.md](CASE_STUDY_CAPSTONE.md)
-**Submissions:** [Case Study Plan](assignments/CaseStudy_WLAN_Mobile_Security_Plan.pdf) · [Cyber Kill Chain](assignments/CaseStudy_Cyber_Kill_Chain_Analysis.pdf) · [Presentation](assignments/CaseStudy_Final_Presentation.pdf)
+**Submissions:** [Case Study Plan](assignments/CaseStudy_WLAN_Mobile_Security_Plan.pdf) · [Kill Chain Quiz Evidence](assignments/CyberKillChain_Quiz_Evidence.pdf) · [Presentation](assignments/CaseStudy_Final_Presentation.pdf)
 
 ## Skills Demonstrated
 
@@ -174,13 +174,7 @@ This course maps directly to the **CWSP (Certified Wireless Security Professiona
 
 ## Architecture Principles
 
-Three design principles that define effective wireless & mobile security:
-
-1. **Wireless security is perimeter security without a perimeter.** Traditional network security assumed a hard perimeter — the wire. WLAN erodes that assumption: every AP is an extension of the corporate network into RF space that attackers can physically access from the parking lot. WPA3 + WIPS + NAC are the compensating controls that restore the perimeter logically when the physical one is gone.
-
-2. **BYOD is a compensating control, not a default.** Letting employees use personal devices saves hardware costs, but it shifts the security burden from device-ownership to device-posture. Every BYOD deployment needs MDM, containerization, and conditional access to approximate the visibility and control you'd get from corporate-owned devices. Without those controls, BYOD is unmanaged risk.
-
-3. **Identity matters more than location on wireless.** On wired networks, being plugged into a port often implied authorization. On wireless, the port is air — anyone within range can try to authenticate. User-ID, 802.1X, and certificate-based device authentication shift the trust boundary from the physical to the identity layer. This is the foundational insight that makes Zero Trust coherent.
+_See [Architecture Principles](../../README.md#architecture-principles) in the portfolio landing page for the three wireless security design principles applied throughout this work._
 
 ## References
 

@@ -23,7 +23,7 @@ This directory contains sanitized lab submissions and capstone deliverables.
 | File | Component |
 |---|---|
 | `CaseStudy_WLAN_Mobile_Security_Plan.pdf` | Main case study report (Parts 1-3) |
-| `CaseStudy_Cyber_Kill_Chain_Analysis.pdf` | Cyber Kill Chain analysis (Parts 1-2) |
+| `CyberKillChain_Quiz_Evidence.pdf` | Cyber Kill Chain (Part 1) + Networking Concepts (Part 2) quiz completion evidence |
 | `CaseStudy_Final_Presentation.pdf` | Final presentation deck |
 
 ## Related Documents

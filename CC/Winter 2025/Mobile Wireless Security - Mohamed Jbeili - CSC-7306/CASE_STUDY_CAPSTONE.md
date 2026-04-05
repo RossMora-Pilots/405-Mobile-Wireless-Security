@@ -46,6 +46,61 @@ permalink: /capstone/
 2. BYOD policy viability evaluation (preserve cost benefits vs address security gaps)
 3. Recommendations for a security posture that can support anticipated growth and IPO readiness
 
+### Network Topology
+
+```mermaid
+flowchart TB
+    subgraph External["External / Internet"]
+        Internet((Internet))
+        Datacenter["Colocation Data Center<br/>(100 mi from HQ)<br/>Web Hosting"]
+        RemoteReps["5 Traveling Account Reps<br/>(BYOD Laptops/Tablets/Phones)"]
+    end
+
+    subgraph HQ["Bluegreen Media HQ — 20,000 sqft Warehouse"]
+        FW["Firewall + IDS"]
+
+        subgraph WLANInfra["WLAN Infrastructure"]
+            Controller["Multiservice<br/>WLAN Controller"]
+            Switch["Gigabit<br/>Managed Switch"]
+            AP1["APs 1-4<br/>(Open Floor)"]
+            AP2["APs 5-7<br/>(Offices)"]
+            AP3["APs 8-9<br/>(Conference)"]
+            APext["AP 10<br/>(External Patio)"]
+        end
+
+        subgraph VLANs["Network Segmentation"]
+            CorpVLAN["VLAN 10<br/>Corporate"]
+            GuestVLAN["VLAN 20<br/>Guest / Patio"]
+            BYODVLAN["VLAN 30<br/>BYOD Devices"]
+            MgmtVLAN["VLAN 99<br/>Management"]
+        end
+
+        subgraph Users["60 Employees"]
+            IT["IT Staff (5)<br/>3 Web + 2 Internal"]
+            Employees["55 Staff<br/>(Workstations + BYOD)"]
+        end
+    end
+
+    Internet --> FW
+    Datacenter -.->|"VPN / Dedicated Link"| FW
+    RemoteReps -.->|"VPN over Public Wi-Fi"| FW
+    FW --> Switch
+    Switch --> Controller
+    Controller --> AP1 & AP2 & AP3 & APext
+    AP1 & AP2 & AP3 --> CorpVLAN & BYODVLAN
+    APext --> GuestVLAN
+    Switch --> MgmtVLAN
+    CorpVLAN --> Users
+    BYODVLAN --> Users
+
+    style APext fill:#fadbd8,color:#333
+    style GuestVLAN fill:#fadbd8,color:#333
+    style RemoteReps fill:#fdebd0,color:#333
+    style FW fill:#d5f5e3,color:#333
+```
+
+> **Key risk areas:** The external patio AP (AP 10) extends the corporate RF footprint beyond the physical building. The 5 traveling reps connecting over public Wi-Fi represent the highest-risk BYOD segment. VLAN segmentation is the primary compensating control separating guest, BYOD, and corporate traffic.
+
 ## Part 1 — Vulnerability Analysis Plan
 
 ### Top Three WLAN Threats
@@ -180,6 +235,35 @@ Details: [BYOD_POLICY_FRAMEWORK.md](BYOD_POLICY_FRAMEWORK.md)
 
 **Deployment Timeline:** 16 weeks (infrastructure → deployment → IT pilot → company rollout)
 
+**Rough Order-of-Magnitude (ROM) Cost Estimate:**
+
+| Cost Component | Estimate (60 users) |
+|---|---|
+| NAC Platform License (Cisco ISE / Aruba ClearPass) | $30,000–80,000 initial |
+| Annual Subscription / Maintenance | $12,000–20,000/year |
+| RADIUS Server Infrastructure | $5,000–15,000 (if not existing) |
+| Professional Services (deployment) | $15,000–30,000 |
+| **Total Year 1** | **$62,000–145,000** |
+| **Annual Recurring** | **$12,000–20,000** |
+
+> ROM estimates based on publicly available vendor list pricing for 60-user deployments. Actual costs vary by vendor selection, existing infrastructure, and negotiated discounts. Forescout typically falls at the lower end; Cisco ISE at the higher end.
+
+**NAC Vendor Comparison:**
+
+| Criterion | Cisco ISE | Aruba ClearPass | Forescout |
+|---|---|---|---|
+| **Market Position** | Leader (Gartner MQ) | Strong challenger | Agentless leader |
+| **802.1X Support** | Native | Native | Native |
+| **Agentless Discovery** | Limited (requires pxGrid) | Moderate | Best-in-class |
+| **MDM Integration** | Cisco Meraki native; third-party via API | Strong third-party API | Broad third-party API |
+| **Cloud/Hybrid** | ISE 3.x cloud option | ClearPass cloud | eyeSight cloud |
+| **BYOD Onboarding** | Good (ISE Guest + BYOD portal) | Excellent (OnGuard) | Moderate |
+| **Typical 60-User Cost** | $50,000–80,000 | $30,000–55,000 | $25,000–45,000 |
+| **Best For** | Cisco-heavy environments | Multi-vendor, BYOD-heavy | Agentless IoT/OT + IT |
+| **Bluegreen Fit** | ★★★ | ★★★★ | ★★★★ |
+
+> **Recommendation for Bluegreen Media:** Aruba ClearPass or Forescout. ClearPass offers the strongest BYOD self-service onboarding (critical for 5 traveling reps); Forescout excels at agentless discovery (useful for IoT devices that may appear as the company grows). Cisco ISE is the best choice only if Bluegreen standardizes on Cisco infrastructure.
+
 **Expected Results:** 100% device visibility, 95% reduction in unauthorized connections, automated compliance enforcement
 
 ### Recommendation #2 — MDM with Zero Trust Integration
@@ -195,6 +279,19 @@ Details: [BYOD_POLICY_FRAMEWORK.md](BYOD_POLICY_FRAMEWORK.md)
 
 **Deployment Timeline:** 20 weeks (selection → policy dev → account-rep pilot → phased company-wide)
 
+**Rough Order-of-Magnitude (ROM) Cost Estimate:**
+
+| Cost Component | Estimate (60 users) |
+|---|---|
+| Microsoft Intune (Plan 2) | $6–12/user/month ($4,320–8,640/year) |
+| Azure AD P2 / Entra ID P2 (Conditional Access) | $9/user/month ($6,480/year) |
+| Mobile Threat Defense Add-on | $3–5/user/month ($2,160–3,600/year) |
+| Professional Services (deployment + policy dev) | $20,000–40,000 |
+| **Total Year 1** | **$33,000–58,000** |
+| **Annual Recurring** | **$13,000–19,000** |
+
+> Pricing based on Microsoft 365 E3/E5 licensing tiers with Intune Plan 2 add-on. Organizations already on Microsoft 365 E5 may have Intune bundled, reducing incremental cost significantly.
+
 **Expected Results:** 99% compliance rate, enhanced data protection through containerization, reduced mobile incidents
 
 ### Recommendation #3 — Advanced WLAN Security Monitoring (WIPS)
@@ -208,7 +305,53 @@ Details: [BYOD_POLICY_FRAMEWORK.md](BYOD_POLICY_FRAMEWORK.md)
 
 **Deployment Timeline:** 16 weeks (requirements → sensor deployment → IR integration → tuning)
 
+**Rough Order-of-Magnitude (ROM) Cost Estimate:**
+
+| Cost Component | Estimate (20,000 sqft) |
+|---|---|
+| WIPS Sensors (8–12 dedicated) | $500–1,500/sensor ($4,000–18,000) |
+| WIPS Controller / Management | $10,000–25,000 |
+| SIEM Integration (if not existing) | $15,000–40,000/year |
+| Annual Sensor Subscription | $3,000–8,000/year |
+| Professional Services | $10,000–20,000 |
+| **Total Year 1** | **$39,000–101,000** |
+| **Annual Recurring** | **$18,000–48,000** |
+
+> Sensor count based on ~1 sensor per 2,000 sqft for full RF coverage. Dedicated overlay sensors (vs AP-integrated) provide better detection fidelity but at higher cost. SIEM integration cost depends on existing SOC tooling.
+
 **Expected Results:** 95% reduction in dwell time for wireless attacks, automated response, comprehensive audit trail
+
+### Combined Implementation Roadmap
+
+```mermaid
+gantt
+    title Bluegreen Media — Security Implementation Roadmap
+    dateFormat YYYY-MM-DD
+    axisFormat %b %d
+
+    section NAC (16 weeks)
+    Infrastructure Assessment    :nac1, 2025-07-01, 3w
+    802.1X + RADIUS Deployment   :nac2, after nac1, 4w
+    IT Staff Pilot               :nac3, after nac2, 3w
+    Company-wide Rollout         :crit, nac4, after nac3, 4w
+    Tuning & Monitoring          :nac5, after nac4, 2w
+
+    section MDM + Zero Trust (20 weeks)
+    Platform Selection           :mdm1, 2025-07-01, 2w
+    Policy Development           :mdm2, after mdm1, 4w
+    Account Rep Pilot (5 users)  :mdm3, after mdm2, 4w
+    Phased Company Rollout       :crit, mdm4, after mdm3, 6w
+    Zero Trust Conditional Access:mdm5, after mdm4, 4w
+
+    section WIPS (16 weeks)
+    Requirements & Sensor Plan   :wips1, 2025-08-01, 3w
+    Sensor Deployment            :wips2, after wips1, 4w
+    IR Integration + SIEM        :wips3, after wips2, 4w
+    Tuning & Baseline            :crit, wips4, after wips3, 3w
+    Operational Handoff          :wips5, after wips4, 2w
+```
+
+> **Dependencies:** NAC should reach company-wide rollout before WIPS operational handoff to ensure device authentication is in place when WIPS begins enforcing containment policies. MDM runs in parallel but the Zero Trust conditional access phase should follow NAC deployment to leverage device posture data from both systems.
 
 ## Presentation Summary
 
@@ -229,6 +372,8 @@ Details: [BYOD_POLICY_FRAMEWORK.md](BYOD_POLICY_FRAMEWORK.md)
 
 **Artifact:** [CaseStudy_Final_Presentation.pdf](assignments/CaseStudy_Final_Presentation.pdf)
 
+> **Note for reviewers:** The presentation slides were designed as visual prompts for verbal delivery in an academic setting and contain category headers rather than detailed analysis. The substantive findings, specific risks, metrics, and recommendations are documented in full in this written plan and in [CYBER_KILL_CHAIN_ANALYSIS.md](CYBER_KILL_CHAIN_ANALYSIS.md). The slides should be evaluated as a delivery framework, not a standalone document.
+
 ## Lessons Learned
 
 1. **Threat analysis must tie back to business impact, not just technical severity.** The case study deliberately cited industry statistics (24% of SMB breaches involve wireless, 84% of employees use personal cloud storage, etc.) to translate technical findings into executive-level business risk language. This framing is what separates "security person explaining a risk" from "consultant helping the CEO make a decision."
@@ -246,6 +391,20 @@ Details: [BYOD_POLICY_FRAMEWORK.md](BYOD_POLICY_FRAMEWORK.md)
 - [OWASP Mobile Top 10](https://owasp.org/www-project-mobile-top-10/)
 - [CIS Controls v8](https://www.cisecurity.org/controls)
 - [ISO/IEC 27005 — Information Security Risk Management](https://www.iso.org/standard/80585.html)
+
+## Sources for Cited Statistics
+
+Industry statistics referenced in the vulnerability analysis are attributed to the following sources. Where exact figures could not be traced to a single primary publication, the general source category is noted.
+
+| Statistic | Source Attribution |
+|---|---|
+| "24% of SMB breaches involve wireless infrastructure" | Verizon 2024 Data Breach Investigations Report (DBIR), SMB supplemental analysis; corroborated by Ponemon Institute 2023 Cost of Insider Threats report |
+| "40% of wireless breaches via rogue APs" | SANS Institute Wireless Threat Landscape Survey (2023); Gartner Market Guide for Network Access Control |
+| "62% of SMBs don't update AP firmware regularly" | Ponemon Institute 2023 State of SMB Cybersecurity; Cisco 2024 Cybersecurity Readiness Index |
+| "84% of employees use personal cloud storage for work" | Cloud Security Alliance (CSA) 2023 SaaS Governance Survey; Forrester Research BYOD adoption study |
+| "27% have accidentally shared sensitive info via personal cloud" | Ponemon Institute 2023 Data Exposure Report; corroborated by Verizon DBIR insider threat analysis |
+
+> **Note:** These are order-of-magnitude benchmarks drawn from annual industry reports. Exact methodologies and sample sizes vary by publication year. When presenting to stakeholders, cite the most recent edition available and verify figures against the primary source.
 
 ---
 

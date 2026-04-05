@@ -1,0 +1,95 @@
+# Wireshark Display Filters — Wireless & Mobile Security Analysis
+# Reference collection for CSC-7306 lab exercises and wireless forensics
+#
+# Usage: Copy/paste individual filters into Wireshark's display filter bar,
+# or load as a filter macro file.
+
+# === WLAN Management Frame Filters ===
+
+# All 802.11 management frames (beacons, probes, auth, deauth, assoc)
+wlan.fc.type == 0
+
+# Deauthentication frames (potential DoS / evil twin attack indicator)
+wlan.fc.type_subtype == 0x000c
+
+# Disassociation frames
+wlan.fc.type_subtype == 0x000a
+
+# Probe requests (device looking for known networks — PNL harvesting)
+wlan.fc.type_subtype == 0x0004
+
+# Probe responses
+wlan.fc.type_subtype == 0x0005
+
+# Authentication frames
+wlan.fc.type_subtype == 0x000b
+
+# Beacon frames (AP advertisement)
+wlan.fc.type_subtype == 0x0008
+
+# === EAPOL / WPA Handshake Filters ===
+
+# All EAPOL frames (4-way handshake traffic)
+eapol
+
+# EAPOL key exchange (WPA/WPA2 handshake)
+eapol.type == 3
+
+# === Rogue AP / Evil Twin Detection ===
+
+# Filter by specific SSID (replace with target network name)
+wlan.ssid == "TARGET_SSID"
+
+# Multiple BSSIDs advertising same SSID (evil twin indicator)
+# Step 1: Filter by SSID, then check for different BSSID MACs
+wlan.ssid == "TARGET_SSID" && wlan.fc.type_subtype == 0x0008
+
+# Frames from specific BSSID
+wlan.bssid == 00:11:22:33:44:55
+
+# === OS / Device Fingerprinting ===
+
+# TTL-based OS identification (common defaults)
+# Linux/Android: TTL=64, Windows: TTL=128, Cisco/network devices: TTL=255
+ip.ttl == 64
+ip.ttl == 128
+
+# HTTP User-Agent strings (browser/OS identification)
+http.user_agent
+
+# Specific Android device traffic
+http.user_agent contains "Android"
+
+# Specific iOS device traffic
+http.user_agent contains "iPhone" || http.user_agent contains "iPad"
+
+# DNS queries from mobile devices (app fingerprinting)
+dns && ip.src == 172.30.0.4
+
+# === Mobile Security Analysis ===
+
+# TLS Client Hello (for JA3/JA4 fingerprinting)
+tls.handshake.type == 1
+
+# Unencrypted HTTP traffic (security violation on corporate network)
+http && !ssl
+
+# DNS over traditional port (not DoH/DoT — potential privacy gap)
+dns && udp.port == 53
+
+# mDNS / Bonjour traffic (device discovery, potential info leak)
+udp.port == 5353
+
+# DHCP requests (new device joining network)
+bootp.option.type == 53
+
+# === Traffic Analysis ===
+
+# All traffic to/from specific host (replace IP)
+ip.addr == 172.30.0.4
+
+# Large data transfers (potential exfiltration — adjust threshold)
+tcp.len > 10000
+
+# Unusual destination ports (C2 indicator)
+tcp.dstport > 10000 && tcp.dstport < 65535

@@ -1,0 +1,79 @@
+{
+  "$schema": "https://raw.githubusercontent.com/MicrosoftDocs/microsoft-365-docs/main/microsoft-365/compliance/device-compliance-schema.json",
+  "_metadata": {
+    "description": "Microsoft Intune MDM compliance policy template for BYOD wireless security",
+    "course": "CSC-7306 Mobile Wireless Security",
+    "context": "Bluegreen Media case study — Tiered BYOD with enhanced security controls",
+    "reference": "NIST SP 800-124r2, CIS Mobile Device Benchmark"
+  },
+  "compliancePolicy": {
+    "displayName": "BYOD-Wireless-Security-Baseline",
+    "description": "Baseline compliance policy for BYOD devices connecting to corporate WLAN. Enforces encryption, OS patching, jailbreak detection, and lock-screen requirements per NIST SP 800-124r2.",
+    "platforms": ["android", "iOS"],
+    "settings": {
+      "deviceSecurity": {
+        "requireEncryption": true,
+        "requireDeviceLock": true,
+        "minimumPinLength": 6,
+        "biometricAuthAllowed": true,
+        "autoLockTimeoutMinutes": 5,
+        "maxFailedAttemptsBeforeWipe": 10,
+        "blockJailbrokenDevices": true,
+        "blockRootedDevices": true
+      },
+      "osCompliance": {
+        "minimumAndroidVersion": "12.0",
+        "minimumIOSVersion": "16.0",
+        "requireSecurityPatch": true,
+        "maxDaysSinceLastPatchCheck": 30
+      },
+      "networkSecurity": {
+        "requireVPN": true,
+        "vpnProfileName": "Corporate-AlwaysOn-VPN",
+        "blockOpenWiFiConnections": true,
+        "allowedWiFiSSIDs": ["BlueGreen-Corp", "BlueGreen-Guest"],
+        "requireCertificateBasedAuth": true
+      },
+      "applicationSecurity": {
+        "blockSideloadedApps": true,
+        "requireAppStoreOnly": true,
+        "managedAppContainerization": true,
+        "blockClipboardSharingToUnmanaged": true,
+        "blockScreenCapture": false,
+        "requireManagedBrowser": true
+      },
+      "dataProtection": {
+        "requireBackupEncryption": true,
+        "blockCloudBackupToPersonal": true,
+        "selectiveWipeOnUnenroll": true,
+        "blockCopyToUnmanagedApps": true
+      }
+    },
+    "nonComplianceActions": [
+      {
+        "action": "notify",
+        "gracePeriodHours": 0,
+        "message": "Your device does not meet corporate security requirements. Please update your device to regain access."
+      },
+      {
+        "action": "restrictAccess",
+        "gracePeriodHours": 24,
+        "message": "Corporate access restricted due to non-compliance. Contact IT support."
+      },
+      {
+        "action": "quarantine",
+        "gracePeriodHours": 72,
+        "message": "Device quarantined. Only remediation resources available."
+      }
+    ],
+    "conditionalAccess": {
+      "requireCompliantDevice": true,
+      "requireMFA": true,
+      "blockLegacyAuth": true,
+      "sessionControls": {
+        "signInFrequencyHours": 12,
+        "persistentBrowserSession": false
+      }
+    }
+  }
+}
