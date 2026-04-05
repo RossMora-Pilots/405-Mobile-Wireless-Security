@@ -1,3 +1,9 @@
+---
+title: Evidence & Screenshots Index — Mobile Wireless Security
+description: Comprehensive evidence index for lab submissions, capstone deliverables, and scripts in the CSC-7306 portfolio.
+permalink: /evidence/
+---
+
 # Evidence & Screenshots Index — Mobile Wireless Security
 
 Comprehensive evidence index for the Mobile Wireless Security portfolio. All artifacts are contained within the PDF submissions — visual evidence is embedded in the lab PDFs exported by the Jones & Bartlett LMS.

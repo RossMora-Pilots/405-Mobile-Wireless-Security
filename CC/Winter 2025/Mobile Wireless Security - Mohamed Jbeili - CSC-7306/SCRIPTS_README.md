@@ -1,3 +1,9 @@
+---
+title: Scripts — Mobile Wireless Security
+description: Student-created scripts and automation utilities from the CSC-7306 Mobile Wireless Security course.
+permalink: /scripts/
+---
+
 # Scripts — Mobile Wireless Security
 
 Scripts and automation utilities developed during or inspired by the Mobile Wireless Security course (CSC-7306).

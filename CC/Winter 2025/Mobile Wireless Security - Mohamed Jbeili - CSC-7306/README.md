@@ -174,7 +174,7 @@ This course maps directly to the **CWSP (Certified Wireless Security Professiona
 
 ## Architecture Principles
 
-_See [Architecture Principles](../../README.md#architecture-principles) in the portfolio landing page for the three wireless security design principles applied throughout this work._
+_See [Architecture Principles](../../../README.md#architecture-principles) in the portfolio landing page for the three wireless security design principles applied throughout this work._
 
 ## References
 
