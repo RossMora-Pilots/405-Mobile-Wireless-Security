@@ -51,11 +51,11 @@ flowchart LR
 
     Now --> SecPlus --> CWNA --> CWSP --> OnJob
 
-    style Now fill:#fef9e7,color:#333
-    style SecPlus fill:#fdebd0,color:#333
-    style CWNA fill:#d6eaf8,color:#333
-    style CWSP fill:#d5f5e3,color:#333
-    style OnJob fill:#e8daef,color:#333
+    style Now fill:#1d3557,color:#fff
+    style SecPlus fill:#1d3557,color:#fff
+    style CWNA fill:#e76f51,color:#fff
+    style CWSP fill:#2d6a4f,color:#fff
+    style OnJob fill:#2d6a4f,color:#fff
 ```
 
 > **Sequencing rationale:** Security+ is the vendor-neutral baseline most entry-level postings filter on; CWNA establishes administrative wireless competency as the CWSP prerequisite; CWSP validates the security-specific work in this portfolio; real-world operations experience is required before pursuing expert-level certs.
@@ -192,16 +192,16 @@ flowchart LR
 
     R --> W --> D --> E --> I --> C2 --> A
 
-    style R fill:#fef9e7,color:#333
-    style W fill:#fdebd0,color:#333
-    style D fill:#fadbd8,color:#333
-    style E fill:#f5b7b1,color:#333
-    style I fill:#f1948a,color:#333
-    style C2 fill:#e6b0aa,color:#333
-    style A fill:#d98880,color:#333
+    style R fill:#1d3557,color:#fff
+    style W fill:#1d3557,color:#fff
+    style D fill:#e76f51,color:#fff
+    style E fill:#e76f51,color:#fff
+    style I fill:#c1121f,color:#fff
+    style C2 fill:#c1121f,color:#fff
+    style A fill:#c1121f,color:#fff
 ```
 
-> **Legend:** Warm-to-hot color gradient (yellow → red) tracks escalating attacker impact across the seven kill chain phases. Each node lists phase number, abbreviated name, and representative wireless/mobile TTPs.
+> **Legend:** Blue → orange → red gradient tracks escalating attacker impact. Blue = reconnaissance/preparation, orange = active exploitation/delivery, red = installation through objectives.
 
 - **NAC** breaks Delivery (unauthorized devices can't reach corporate resources)
 - **MDM + Zero Trust** breaks Installation + C2 + Objectives (no persistent foothold, no trusted lateral movement)
@@ -265,6 +265,17 @@ Full details: [WEEKLY_LABS_SUMMARY.md](CC/Winter%202025/Mobile%20Wireless%20Secu
 
 Full writeup: [CASE_STUDY_CAPSTONE.md](CC/Winter%202025/Mobile%20Wireless%20Security%20-%20Mohamed%20Jbeili%20-%20CSC-7306/CASE_STUDY_CAPSTONE.md)
 
+## Visual Language
+
+All Mermaid diagrams in this portfolio follow a consistent four-color palette:
+
+| Color | Hex | Meaning | Usage |
+|---|---|---|---|
+| 🟢 Green | `#2d6a4f` | Defensive / compliant / secure | Firewalls, NAC, MDM, successful states |
+| 🔵 Blue | `#1d3557` | Infrastructure / analysis / neutral | Network devices, scanning, reconnaissance |
+| 🟠 Orange | `#e76f51` | Transitional / medium risk / active threat | Exploitation phases, limited access, remediation |
+| 🔴 Red | `#c1121f` | High risk / attack / critical | Active breaches, attacker nodes, non-compliant states |
+
 ## Architecture Principles
 
 Three design principles that define effective wireless & mobile security:
@@ -319,7 +330,18 @@ This portfolio demonstrates academic and lab-based competency. The next phase fo
 | **Certifications** | Course content aligned to CWSP domains | Pass CompTIA Security+ (SY0-701), then pursue CWNA → CWSP path |
 | **Enterprise networking** | NAC architecture design on paper | Gain hands-on experience with Cisco ISE or Aruba ClearPass in an internship or co-op |
 
-> **Availability:** Actively seeking entry-level roles in wireless security analysis, mobile device security administration, or BYOD/MDM engineering. Open to internship, co-op, or junior analyst positions.
+### Home Lab Roadmap
+
+Concrete steps to bridge from academic exercises to demonstrable production experience:
+
+1. **Azure test tenant + Intune pilot** — Enroll 2-3 personal devices (iOS, Android, Windows). Configure compliance policies matching the [MDM template](CC/Winter%202025/Mobile%20Wireless%20Security%20-%20Mohamed%20Jbeili%20-%20CSC-7306/scripts/mdm_compliance_policy.json) in this portfolio. Document enrollment screenshots, compliance dashboard, and conditional access policy results.
+2. **Raspberry Pi WLAN attack lab** — Build an evil twin AP with hostapd, test WPA2 handshake capture with aircrack-ng, then deploy WPA3-SAE and verify the attack fails. Document the before/after with packet captures.
+3. **Splunk/ELK detection dashboard** — Ingest WIPS alerts, MDM compliance events, and NAC authentication logs. Build a dashboard showing "Threat Model → Detection → Response" flow with real data from the home lab.
+4. **Red team validation** — Attempt to break own defenses: MAC spoofing against ACL, deauth against PMF, sideloaded app against MDM whitelist. Document what works and what fails.
+
+> **Why this matters to employers:** The gap between "I designed this" and "I deployed and tested this" is the primary differentiator between entry-level and mid-level candidates. Each completed home lab milestone directly addresses hiring manager concerns about execution capability.
+
+**Availability:** Actively seeking entry-level roles in wireless security analysis, mobile device security administration, or BYOD/MDM engineering. Open to internship, co-op, or junior analyst positions.
 
 ## Portfolio Context
 

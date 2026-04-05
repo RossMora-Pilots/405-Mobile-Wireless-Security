@@ -14,6 +14,7 @@ permalink: /kill-chain/
 - [Kill Chain Flow](#kill-chain-flow)
 - [Phase-by-Phase Analysis](#phase-by-phase-analysis)
 - [Defender's Equivalent: Unified Kill Chain Awareness](#defenders-equivalent-unified-kill-chain-awareness)
+- [Wireless Incident Response Playbook](#wireless-incident-response-playbook)
 - [Assessment Evidence](#assessment-evidence)
 
 ## Background
@@ -36,16 +37,16 @@ flowchart LR
 
     R --> W --> D --> E --> I --> C2 --> A
 
-    style R fill:#fef9e7,color:#333
-    style W fill:#fdebd0,color:#333
-    style D fill:#fadbd8,color:#333
-    style E fill:#f5b7b1,color:#333
-    style I fill:#f1948a,color:#333
-    style C2 fill:#e6b0aa,color:#333
-    style A fill:#d98880,color:#333
+    style R fill:#1d3557,color:#fff
+    style W fill:#1d3557,color:#fff
+    style D fill:#e76f51,color:#fff
+    style E fill:#e76f51,color:#fff
+    style I fill:#c1121f,color:#fff
+    style C2 fill:#c1121f,color:#fff
+    style A fill:#c1121f,color:#fff
 ```
 
-> **Legend:** Warm-to-hot color gradient (yellow → red) tracks escalating attacker impact. Each node lists phase number, name, and representative wireless/mobile TTPs.
+> **Legend:** Blue → orange → red gradient tracks escalating attacker impact. Blue = reconnaissance/preparation, orange = active exploitation/delivery, red = installation through objectives. Each node lists phase number, name, and representative wireless/mobile TTPs.
 
 ## Phase-by-Phase Analysis
 
@@ -193,6 +194,34 @@ Each kill chain phase maps to specific controls in NIST and ISO frameworks:
 | 7. Objectives | §6.3 Data protection | §5.3 Container/DLP | A.8.12 DLP, A.5.23 Cloud | CIS 3.12 Data protection |
 
 > **Usage:** Each row identifies which framework control breaks the attack chain at that phase. Use for compliance mapping or gap analysis during security plan reviews.
+
+## Wireless Incident Response Playbook
+
+When a kill chain phase is detected, this playbook defines the response workflow:
+
+```mermaid
+flowchart TD
+    Detect["🔍 DETECT<br/>WIPS alert / MDM anomaly /<br/>SOC correlation"] --> Classify{"Classify<br/>Severity"}
+    Classify -->|Critical<br/>Active breach| Contain_C["🛑 CONTAIN (Critical)<br/>• Disable compromised SSID<br/>• Quarantine device via NAC<br/>• Block lateral movement"]
+    Classify -->|High<br/>Active threat| Contain_H["⚠️ CONTAIN (High)<br/>• Isolate to remediation VLAN<br/>• Revoke device certificate<br/>• Alert SOC analyst"]
+    Classify -->|Medium/Low<br/>Recon detected| Monitor["📊 MONITOR<br/>• Increase logging verbosity<br/>• Deploy honeypot SSID<br/>• Track attacker dwell time"]
+    Contain_C --> Eradicate["🧹 ERADICATE<br/>• Re-key all wireless credentials<br/>• Patch exploited vulnerability<br/>• Remove rogue AP / malicious app<br/>• Rotate certificates"]
+    Contain_H --> Eradicate
+    Monitor -->|Escalates| Contain_H
+    Eradicate --> Recover["🔄 RECOVER<br/>• Restore clean device config<br/>• Re-enroll in MDM<br/>• Validate posture compliance<br/>• Resume full network access"]
+    Recover --> Lessons["📝 LESSONS LEARNED<br/>• Update WIPS signatures<br/>• Revise kill chain coverage map<br/>• Improve detection time metrics<br/>• Brief stakeholders"]
+
+    style Detect fill:#1d3557,color:#fff
+    style Classify fill:#1d3557,color:#fff
+    style Contain_C fill:#c1121f,color:#fff
+    style Contain_H fill:#e76f51,color:#fff
+    style Monitor fill:#1d3557,color:#fff
+    style Eradicate fill:#e76f51,color:#fff
+    style Recover fill:#2d6a4f,color:#fff
+    style Lessons fill:#2d6a4f,color:#fff
+```
+
+> **Integration with kill chain:** Detection maps to Phases 1-3 (Recon through Delivery), Containment maps to Phases 4-5 (Exploitation/Installation), Eradication maps to Phase 6 (C2 disruption), and Recovery ensures Phase 7 (Actions on Objectives) cannot complete. The playbook assumes WIPS, MDM, and NAC are deployed per the capstone recommendations.
 
 ## Assessment Evidence
 

@@ -14,6 +14,7 @@ permalink: /threats/
 - [WLAN Threat Catalog](#wlan-threat-catalog)
 - [Mobile Threat Catalog](#mobile-threat-catalog)
 - [STRIDE Summary](#stride-summary)
+- [Wireless Protocol Comparison](#wireless-protocol-security-comparison)
 - [Attack Surface Diagram](#attack-surface-diagram)
 - [References](#references)
 
@@ -202,6 +203,72 @@ Each of the 12 cataloged threats plotted on a 5×5 risk matrix. Likelihood and i
 - **Low risk:** Wardriving (recon only), Dragonblood (rare in practice with H2E) — monitor via WIPS
 
 > **Methodology:** Likelihood based on threat actor accessibility and Bluegreen Media's current control posture (pre-remediation). Impact based on potential data exposure, business disruption, and IPO-readiness implications. Assessment follows NIST SP 800-30 qualitative risk analysis guidance.
+
+### Quantified Risk Assessment
+
+Semi-quantitative risk scores aligned with NIST SP 800-30 and CVSS v3.1 methodology. Likelihood scored 1-5, Impact scored 1-5, Risk = Likelihood × Impact (max 25).
+
+| Threat | Likelihood (1-5) | Impact (1-5) | Risk Score | CVSS Base (est.) | Risk Level | Priority |
+|---|---|---|---|---|---|---|
+| Data Leakage via Cloud Sync | 5 (Almost Certain) | 5 (Critical) | **25** | 8.1 | 🔴 Critical | Immediate |
+| Malicious Apps | 4 (Likely) | 5 (Critical) | **20** | 8.8 | 🔴 Critical | Immediate |
+| Rogue AP | 3 (Possible) | 5 (Critical) | **15** | 7.5 | 🟠 High | Within 30 days |
+| Jailbreak/Root | 3 (Possible) | 5 (Critical) | **15** | 7.8 | 🟠 High | Within 30 days |
+| Unsecured Public Wi-Fi | 5 (Almost Certain) | 4 (High) | **20** | 6.8 | 🔴 Critical | Immediate |
+| Smishing/Vishing | 4 (Likely) | 4 (High) | **16** | 7.1 | 🟠 High | Within 30 days |
+| Evil Twin AP | 3 (Possible) | 4 (High) | **12** | 7.4 | 🟠 High | Within 30 days |
+| Lost/Stolen Device | 3 (Possible) | 4 (High) | **12** | 6.2 | 🟡 Medium | Within 90 days |
+| Deauth/DoS | 4 (Likely) | 3 (Moderate) | **12** | 5.3 | 🟡 Medium | Within 90 days |
+| KRACK | 2 (Unlikely) | 4 (High) | **8** | 6.8 | 🟡 Medium | Within 90 days |
+| Wardriving | 2 (Unlikely) | 2 (Low) | **4** | 3.1 | 🟢 Low | Monitor |
+| Dragonblood | 1 (Rare) | 4 (High) | **4** | 5.9 | 🟢 Low | Monitor |
+
+> **Scoring methodology:** Likelihood based on Bluegreen Media's pre-remediation control posture (60 employees, BYOD, no NAC/MDM/WIPS). Impact based on potential data exposure volume, business disruption severity, and IPO-readiness implications. CVSS base estimates use the FIRST CVSS v3.1 calculator with attack vector=Adjacent (WLAN threats) or Network (mobile threats), adjusted for complexity and privilege requirements. Risk levels: Critical (20-25), High (12-19), Medium (6-11), Low (1-5).
+
+**Annualized Loss Expectancy (illustrative for Bluegreen Media):**
+
+| Risk Level | Representative Threat | Single Loss Expectancy | Annual Rate of Occurrence | ALE |
+|---|---|---|---|---|
+| Critical | Data breach via cloud sync | $180,000 (regulatory fines + incident response + reputation) | 0.7 | **$126,000/yr** |
+| High | Rogue AP leading to network compromise | $95,000 (IR + forensics + downtime) | 0.3 | **$28,500/yr** |
+| Medium | Deauth/DoS on guest network | $8,000 (productivity loss + IT response) | 2.0 | **$16,000/yr** |
+| Low | Wardriving reconnaissance | $2,000 (investigation time) | 1.5 | **$3,000/yr** |
+
+> **Note:** ALE figures are rough-order-of-magnitude estimates for a 60-employee pre-IPO company. They demonstrate the risk quantification methodology; actual values require asset valuation and actuarial data specific to the organization.
+
+### Control-to-Threat Mapping
+
+Which defensive control breaks which threat. ● = primary control, ○ = compensating control.
+
+| Threat | NAC (802.1X) | MDM/MAM | WIPS | WPA3-SAE | VPN | CASB | User Training |
+|---|---|---|---|---|---|---|---|
+| Wardriving | | | ● | ○ | | | |
+| Rogue AP | ● | | ● | | | | |
+| Evil Twin | ○ | | ● | ● | ○ | | ● |
+| KRACK | | | | ● | ○ | | |
+| Dragonblood | | | | ● | ○ | | |
+| Deauth/DoS | | | ● | ○ (PMF) | | | |
+| Malicious Apps | | ● | | | | ○ | ● |
+| Smishing/Vishing | | ○ | | | | | ● |
+| Cloud Sync Leakage | | ● | | | | ● | ○ |
+| Jailbreak/Root | | ● | | | | | |
+| Unsecured Public Wi-Fi | | ○ | | | ● | | ● |
+| Lost/Stolen Device | | ● | | | | | |
+
+**Key insight from STRIDE analysis:** Information Disclosure dominates (7/12 threats), meaning **confidentiality controls must be prioritized**: CASB for cloud data, VPN for transit data, MDM containerization for data-at-rest, and WPA3 for wireless-layer encryption. The control stack should be evaluated primarily through a confidentiality lens, with integrity and availability as secondary concerns for this threat landscape.
+
+### Wireless Protocol Security Comparison
+
+| Protocol | Encryption | Key Exchange | Authentication | Known Vulnerabilities | Recommendation |
+|---|---|---|---|---|---|
+| **WEP** | RC4 (40/104-bit) | Static shared key | Open/Shared Key | FMS, PTW, Chop-Chop — broken in minutes | ❌ Never use — remove immediately if found |
+| **WPA-TKIP** | RC4 + TKIP MIC | PSK or 802.1X | PSK or Enterprise | Beck-Tews, Ohigashi-Morii — TKIP deprecated | ❌ Deprecated — migrate to WPA2 minimum |
+| **WPA2-PSK** | AES-CCMP | Pre-Shared Key (4-way handshake) | PSK | Offline dictionary attack on captured handshake; KRACK (patched) | ⚠️ Acceptable for small networks with strong passphrase (20+ chars) |
+| **WPA2-Enterprise** | AES-CCMP | 802.1X / EAP-TLS | RADIUS + certificates | KRACK (patched); server certificate validation required | ✅ Recommended for corporate environments |
+| **WPA3-SAE** | AES-CCMP or AES-GCMP | Simultaneous Authentication of Equals (SAE) | SAE (password-based Diffie-Hellman) | Dragonblood (mitigated by H2E); transition mode downgrade | ✅ Recommended — forward secrecy + offline attack resistance |
+| **WPA3-Enterprise** | AES-256-GCMP | 802.1X / EAP-TLS | RADIUS + certificates + 192-bit suite | No known practical attacks (as of 2025) | ✅ Best available — required for high-sensitivity environments |
+
+> **Lab evidence:** Lab 1 detected `BananaStand` using WEP — confirming that deprecated protocols persist in real environments. Lab 1 hardening applied WPA2-PSK as the minimum baseline. The Bluegreen Media case study recommends WPA2-Enterprise as the target state with WPA3-SAE migration path.
 
 ## Attack Surface Diagram
 

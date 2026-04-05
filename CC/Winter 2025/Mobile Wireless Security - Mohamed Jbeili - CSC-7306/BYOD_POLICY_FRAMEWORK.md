@@ -17,6 +17,7 @@ permalink: /byod/
 - [Zero Trust Integration](#zero-trust-integration)
 - [Reference Architecture](#reference-architecture)
 - [Implementation Phasing](#implementation-phasing)
+- [BYOD Enrollment Workflow](#byod-enrollment-workflow)
 - [References](#references)
 
 ## The BYOD Spectrum
@@ -29,10 +30,10 @@ flowchart LR
     CYOD --> BYODT["Tiered BYOD<br/>(Recommended)"]
     BYODT --> BYODU["Unrestricted<br/>BYOD"]
 
-    style COPE fill:#d5f5e3,color:#333
-    style CYOD fill:#d6eaf8,color:#333
-    style BYODT fill:#fdebd0,color:#333
-    style BYODU fill:#fadbd8,color:#333
+    style COPE fill:#2d6a4f,color:#fff
+    style CYOD fill:#1d3557,color:#fff
+    style BYODT fill:#e76f51,color:#fff
+    style BYODU fill:#c1121f,color:#fff
 ```
 
 | Model | Device Ownership | Control Level | Best Fit |
@@ -127,10 +128,10 @@ flowchart LR
     Post -->|Partial| Limited[Limited VLAN<br/>Email + web only]
     Post -->|Non-compliant| Remediation[Remediation VLAN<br/>Patch + re-check]
 
-    style Guest fill:#fadbd8,color:#333
-    style Full fill:#d5f5e3,color:#333
-    style Limited fill:#fdebd0,color:#333
-    style Remediation fill:#fef9e7,color:#333
+    style Guest fill:#c1121f,color:#fff
+    style Full fill:#2d6a4f,color:#fff
+    style Limited fill:#e76f51,color:#fff
+    style Remediation fill:#1d3557,color:#fff
 ```
 
 **Enforcement Tiers:**
@@ -149,6 +150,31 @@ flowchart LR
 - **Dynamic VLAN assignment** based on device posture
 - **MDM integration** for real-time posture queries
 - **WIPS integration** for rogue device response
+
+### 802.1X Authentication Flow
+
+Detailed authentication sequence for wireless device connecting to corporate WLAN:
+
+```mermaid
+flowchart LR
+    S["Supplicant<br/>(Mobile Device)"] -->|1. EAP-Start| Auth["Authenticator<br/>(Wireless AP)"]
+    Auth -->|2. EAP-Request<br/>Identity| S
+    S -->|3. EAP-Response<br/>Identity| Auth
+    Auth -->|4. RADIUS<br/>Access-Request| RAD["RADIUS Server<br/>(e.g., Cisco ISE)"]
+    RAD -->|5. EAP-TLS<br/>Certificate Exchange| S
+    S -->|6. Client Certificate<br/>+ Device Posture| RAD
+    RAD -->|7. Validate cert<br/>+ query MDM| MDM["MDM Server<br/>(Intune)"]
+    MDM -->|8. Posture: Compliant| RAD
+    RAD -->|9. RADIUS<br/>Access-Accept<br/>+ VLAN Assignment| Auth
+    Auth -->|10. Port Opened<br/>Full Corporate VLAN| S
+
+    style S fill:#1d3557,color:#fff
+    style Auth fill:#1d3557,color:#fff
+    style RAD fill:#2d6a4f,color:#fff
+    style MDM fill:#2d6a4f,color:#fff
+```
+
+> **Key points:** Steps 5-6 use EAP-TLS mutual certificate authentication — the device proves its identity to the RADIUS server AND the server proves its identity to the device (preventing evil twin RADIUS). Step 7 integrates MDM posture into the authentication decision — a device with a valid certificate but non-compliant posture (e.g., jailbroken) is placed in the Remediation VLAN instead.
 
 ## Zero Trust Integration
 
@@ -217,6 +243,16 @@ flowchart TB
 
     MDM -.->|Posture| NAC
     IDP -.->|Identity| NAC
+
+    style Mobile fill:#1d3557,color:#fff
+    style ZTClient fill:#1d3557,color:#fff
+    style MDM fill:#2d6a4f,color:#fff
+    style IDP fill:#2d6a4f,color:#fff
+    style NAC fill:#2d6a4f,color:#fff
+    style CASB fill:#2d6a4f,color:#fff
+    style VPN fill:#1d3557,color:#fff
+    style Proxy fill:#1d3557,color:#fff
+    style Apps fill:#2d6a4f,color:#fff
 ```
 
 ## MDM Vendor Comparison
@@ -247,6 +283,37 @@ Four-phase rollout (from Bluegreen Media case study):
 | **2. Pilot** | Weeks 5-8 | Deploy to IT staff + selected test users, collect feedback, tune controls, develop metrics |
 | **3. Full Deployment** | Weeks 9-12 | Roll out to all employees, training, compliance monitoring begins, policy review cycle established |
 | **4. Ongoing Management** | Continuous | Regular compliance reviews, policy updates for emerging threats, user experience improvements |
+
+### BYOD Enrollment Workflow
+
+Step-by-step enrollment process for a new BYOD device joining the corporate program:
+
+```mermaid
+flowchart TD
+    Start["Employee Requests<br/>BYOD Enrollment"] --> Accept["Accepts BYOD Policy<br/>& Privacy Agreement"]
+    Accept --> Install["Installs Company Portal<br/>(Intune) from App Store"]
+    Install --> Auth["Authenticates with<br/>Corporate Credentials<br/>(Entra ID + MFA)"]
+    Auth --> Enroll["MDM Enrollment<br/>Certificate Issued<br/>(SCEP/PKI)"]
+    Enroll --> Scan["Compliance Scan<br/>(OS version, encryption,<br/>jailbreak check)"]
+    Scan -->|Compliant| Provision["Provision Corporate<br/>Profile: VPN, Wi-Fi,<br/>Email, App Catalog"]
+    Scan -->|Non-Compliant| Remediate["Remediation Required<br/>(Update OS, Enable<br/>Encryption, etc.)"]
+    Remediate --> Scan
+    Provision --> VLAN["NAC Assigns<br/>Appropriate VLAN<br/>Based on Posture"]
+    VLAN --> Active["✅ Device Active<br/>in BYOD Program"]
+
+    style Start fill:#1d3557,color:#fff
+    style Accept fill:#1d3557,color:#fff
+    style Install fill:#1d3557,color:#fff
+    style Auth fill:#2d6a4f,color:#fff
+    style Enroll fill:#2d6a4f,color:#fff
+    style Scan fill:#e76f51,color:#fff
+    style Provision fill:#2d6a4f,color:#fff
+    style Remediate fill:#c1121f,color:#fff
+    style VLAN fill:#2d6a4f,color:#fff
+    style Active fill:#2d6a4f,color:#fff
+```
+
+> **Privacy safeguard:** Step 2 is critical for employee trust — the privacy agreement explicitly documents what IT can and cannot see on personal devices. Intune's MAM-only mode (without full device enrollment) is available for employees who decline full MDM but still need email access.
 
 ## User Experience Considerations
 

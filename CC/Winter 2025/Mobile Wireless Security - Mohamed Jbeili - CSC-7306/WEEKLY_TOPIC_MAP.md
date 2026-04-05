@@ -56,6 +56,15 @@ flowchart LR
         G --> H[Device<br/>Fingerprinting]
     end
     Foundation --> Advanced
+
+    style A fill:#1d3557,color:#fff
+    style B fill:#2d6a4f,color:#fff
+    style C fill:#e76f51,color:#fff
+    style D fill:#e76f51,color:#fff
+    style E fill:#2d6a4f,color:#fff
+    style F fill:#1d3557,color:#fff
+    style G fill:#1d3557,color:#fff
+    style H fill:#c1121f,color:#fff
 ```
 
 ## Weekly Curriculum
