@@ -6,6 +6,10 @@
 >
 > Reviewer role simulated: **Senior Security Engineer / Hiring Manager, boutique MSSP or
 > regional SOC**, reviewing ~40 candidates for a junior WLAN/MDM analyst role.
+>
+> **Assessment revision:** 2026-04-05 — Full independent re-assessment of every file in
+> the repository (10 portfolio markdown documents, 6 PDF submissions, 8 CI workflows,
+> config.json, root README, course README, docs/, and all support files).
 
 ---
 
@@ -22,6 +26,9 @@
 - [Recommended Additional Visualizations](#recommended-additional-visualizations)
 - [Employer Red Flags & Mitigations](#employer-red-flags--mitigations)
 - [Final Recommendation](#final-recommendation)
+- [Deep-Dive: Document-by-Document Formatting Review](#deep-dive-document-by-document-formatting-review)
+- [Deep-Dive: Visualization Gap Analysis](#deep-dive-visualization-gap-analysis)
+- [Deep-Dive: Information Utilization Audit](#deep-dive-information-utilization-audit)
 
 ---
 
@@ -700,5 +707,631 @@ reviewer**.
 
 ---
 
-*Assessment compiled 2026-04-04 · Reviewer persona: Senior Security Engineer /
-Hiring Manager · Entry-level wireless/mobile security analyst role*
+## Deep-Dive: Document-by-Document Formatting Review
+
+Independent professional-grade formatting audit of each portfolio document, evaluated
+against the standard a cybersecurity firm would expect in a consultant's deliverable
+or a candidate's technical writing sample.
+
+### Root README.md (334 lines)
+
+**Grade: A-**
+
+| Criterion | Assessment |
+|---|---|
+| First impression (5-second scan) | Excellent — CI badges, professional tagline, contact shields, blockquote summary |
+| Information hierarchy | Strong — Quick Start table → Professional Summary → Key Achievements → Architecture → Skills |
+| Visual density | Well-balanced — Mermaid diagrams break up text walls every 30-50 lines |
+| Cross-referencing | Comprehensive — every claim links to evidence |
+| Employer readability | The 5/15/30-min table (`Quick Start for Hiring Managers`) is a standout |
+| Professional voice | Appropriate — confident without overclaiming |
+
+**Issues found:**
+
+1. **Repository structure block is academic-facing, not employer-facing.** Lines 280-308
+   show file-tree layout using `CC/Winter 2025/Mobile Wireless Security - Mohamed Jbeili
+   - CSC-7306/` paths. An employer doesn't need to know the internal directory convention
+   — they need to know what's in the portfolio. Consider collapsing this into a `<details>`
+   block or replacing with a content-oriented table.
+
+2. **"Why Wireless & Mobile Security?" is buried below certifications.** This is the
+   most compelling section (`README.md:26`) — it shows independent thinking and
+   should appear before the certification table, not after. An employer scanning from
+   the top will see credential status before personality; leading with the "why" creates
+   a stronger hook.
+
+3. **The `<details>` block for 12-Week Curriculum Timeline starts collapsed.** This
+   means the timeline Mermaid diagram — which is visually impressive — is invisible
+   by default. An employer speed-reading the README will never click it. Recommendation:
+   keep it expanded, or move the Gantt into the course README and replace the collapsed
+   block with a summary badge (e.g., "12 weeks · 3 labs · 1 capstone").
+
+4. **LinkedIn/GitHub/Email badges are good but should add a portfolio URL badge** once
+   GitHub Pages is enabled. The `_config.yml` is configured but Pages is listed as a
+   "Next" item in the ROADMAP — this should be resolved before submission.
+
+### Course README.md (207 lines)
+
+**Grade: A**
+
+| Criterion | Assessment |
+|---|---|
+| Quick Links table | Clean, complete, well-ordered |
+| Course Overview narrative | Professional — reads like a consulting engagement summary |
+| Lab Portfolio Highlights | Each lab has Objective → Skills → Submission → specific detail |
+| Skills table | Comprehensive, matches root README without verbatim duplication |
+| CWSP alignment table | Strong differentiator — shows certification awareness |
+| Architecture Principles | Three numbered principles with clear argumentation — strong |
+
+**Issues found:**
+
+1. **Mild content duplication with root README.** The Architecture Principles section
+   appears nearly verbatim in both the root README and the course README. While some
+   duplication is expected (different entry points), an employer reading both will notice
+   copy-paste. Recommendation: keep the full version in the root README and link from
+   the course README with a 1-line summary.
+
+2. **The Gantt chart dates don't render well on all Mermaid renderers.** Some GitHub
+   Mermaid renderers compress `1d` duration bars to invisible widths. Verify rendering
+   on GitHub Pages.
+
+### WEEKLY_TOPIC_MAP.md (116 lines)
+
+**Grade: B+**
+
+| Criterion | Assessment |
+|---|---|
+| Structure | Clean table with Week / Date / Topic / Lab / Key Skills columns |
+| Topic Progression diagram | Clear 2-phase flowchart |
+| Weekly Curriculum narratives | Well-written, concise, professional |
+| Evidence Cross-Reference | Good — links to all PDFs |
+
+**Issues found:**
+
+1. **Four "(No session recorded)" weeks (3, 7, 9, 11) create a visual gap.** The Notes
+   section explains lab numbering, but doesn't address why 4 of 12 weeks are blank.
+   Week 7 is "Reading week" — fine. Weeks 3, 9, 11 need explanation. Options:
+   - Mark them as "Self-study / Independent review" with topics
+   - Remove them entirely and present as 8 sessions
+   - Add a note: "These weeks were instructor-free periods; the student used them for
+     textbook reading and capstone preparation"
+
+2. **The table mixes dates (good) with "No session recorded" (ambiguous).** An employer
+   may wonder whether the student simply didn't attend. Adding context removes doubt.
+
+### WEEKLY_LABS_SUMMARY.md (178 lines)
+
+**Grade: A-**
+
+| Criterion | Assessment |
+|---|---|
+| Skills Progression diagram | Excellent — 3-node flowchart with Defender → Auditor → Attacker role mapping |
+| Lab 1 writeup | Strong — before/after table, verification procedure, insights |
+| Lab 3 writeup | Good — dead zone table with specific BSSIDs and signal measurements |
+| Lab 5 writeup | Strong — 4-tool comparison matrix, User-Agent analysis table |
+| Tool Mastery Summary | Clean summary table |
+
+**Issues found:**
+
+1. **Lab 1 is significantly compressed.** The PDF contains 21 screenshot-based analyses
+   with 3,769 words of student-authored content. The MD renders ~35 lines. Key dropped
+   content includes: Kismet hidden-SSID decloaking (`TheGatesofHeck`), WEP detection
+   (`BananaStand`), probe request analysis (`youcantseeme`), and a challenge-mode gateway
+   traversal exercise. These are the most *interesting* parts of the lab and the most
+   likely to catch an interviewer's attention. **Recommendation: expand Lab 1 MD by
+   50-80 lines to surface the decloaking and challenge work.**
+
+2. **Lab 3 talks about heatmaps but shows none.** The heatmap is the single most
+   visually impactful artifact in a site survey, yet the MD contains only text describing
+   the findings. **Recommendation: extract the key heatmap from the PDF as a PNG and
+   embed it inline.** This is the highest-impact visual addition to the portfolio.
+
+3. **Lab 5 User-Agent table omits the Edge/Chromium dual-token insight.** The PDF notes
+   that Edge reveals its Chromium base through dual `Chrome/` and `Edg/` tokens. This
+   observation is genuinely sharp and is exactly the kind of thing an interviewer
+   would remember. It IS partially captured in the MD (line ~271 in the combined output)
+   but could be called out more prominently.
+
+4. **"Time on task" appears for Labs 3 and 5 but not Lab 1.** Either add it for all
+   labs or remove it — inconsistency suggests different writing passes.
+
+### CASE_STUDY_CAPSTONE.md (252 lines)
+
+**Grade: A-**
+
+| Criterion | Assessment |
+|---|---|
+| Client Scenario | Professional — reads like a real consulting RFP brief |
+| Part 1 Vulnerability Analysis | Strong — 3 WLAN + 3 mobile threats with structured analysis |
+| Part 2 Audit & Risk Assessment | Solid framework — NIST 800-30, ISO 27005, audit cadence tables |
+| Part 3 BYOD Policy Framework | Good — 5-component framework with implementation phases |
+| Strategic Recommendations | Best section — 3 concrete recs with architecture + timelines |
+| Lessons Learned | Reflective, business-aware — genuinely good |
+| References | Standard academic references |
+
+**Issues found:**
+
+1. **Industry statistics lack primary sources (CRITICAL).** Five specific figures cited:
+   - "24% of SMB breaches involve wireless" — no citation
+   - "40% of those via rogue APs" — no citation
+   - "62% of SMBs don't update AP firmware" — no citation
+   - "84% of employees use personal cloud storage" — no citation
+   - "27% have accidentally shared sensitive info" — no citation
+
+   The References section lists Verizon DBIR, SANS, Gartner, Forrester generically but
+   doesn't connect specific figures to specific publications. A technical interviewer
+   will challenge these. **Recommendation: either source them with year and page
+   number, or reframe as "industry analysts estimate..." with a general citation.**
+
+2. **No cost/ROI analysis on the three strategic recommendations.** Each recommendation
+   has a deployment timeline and expected outcomes, but zero financial data. The
+   presentation deck even mentions "Cost Breakdown by Initiative" but delivers nothing.
+   **Recommendation: add rough order-of-magnitude (ROM) pricing:**
+   - NAC (Cisco ISE): $30-80k initial + $15k/yr for 60 users
+   - MDM (Intune): $6-12/user/month ($4,320-8,640/yr for 60 users)
+   - WIPS sensors: $500-1,500/sensor × 10+ sensors = $5,000-15,000 hardware
+
+3. **Metrics like "95% reduction in unauthorized connections" lack baselines.** 95%
+   from what baseline? The current unmeasured environment? **Recommendation: frame as
+   "target outcomes per vendor benchmarks — baseline measurement is part of Phase 1."**
+
+4. **No network topology diagram for Bluegreen Media.** The scenario describes 10 APs,
+   20,000 sqft, WLAN controller, firewall, IDS, guest patio — and has zero diagrams.
+   This is the highest-impact missing visualization in the entire portfolio. A single
+   Mermaid or draw.io diagram would anchor the entire case study.
+
+5. **The "Presentation Summary" section lists a slide agenda but not content.** An
+   employer who opens the PDF will see template bullet points, not analysis. Add a
+   note: "Slides designed as verbal delivery prompts; substance is in the written plan."
+
+### CYBER_KILL_CHAIN_ANALYSIS.md (199 lines)
+
+**Grade: A**
+
+| Criterion | Assessment |
+|---|---|
+| Kill Chain flow diagram | Excellent — 7-node color-coded Mermaid |
+| Phase-by-Phase analysis | Thorough — each phase has Attacker TTPs + Defensive Controls |
+| Unified Kill Chain awareness section | Strong — acknowledges non-linear nature |
+| Control coverage mapping table | Directly links controls → labs/case study |
+
+**Issues found:**
+
+1. **The Assessment Evidence section (lines 747-752) inadvertently reveals the weakness
+   of the matching PDF.** It explains the PDF contains "quiz completion banners" but
+   doesn't forcefully distance itself from that artifact. **Recommendation: explicitly
+   state "The substantive kill chain analysis is this document; the PDF archives quiz
+   completion evidence only."**
+
+2. **No legends on the color-coded diagram.** The yellow→red gradient implies severity
+   progression, but this isn't documented. A 1-line legend below the diagram would
+   prevent misinterpretation.
+
+3. **Could benefit from a defensive cost-of-delay analysis.** Currently maps controls
+   to phases but doesn't quantify the cost of failing to break the chain at each
+   phase. Adding a "blast radius" row would strengthen the business case.
+
+### WIRELESS_THREAT_MODEL.md (229 lines)
+
+**Grade: B+**
+
+| Criterion | Assessment |
+|---|---|
+| Modeling approach | Well-documented STRIDE + MITRE ATT&CK Mobile methodology |
+| WLAN Threat Catalog | 6 threats, consistent structured table format |
+| Mobile Threat Catalog | 6 threats, same consistent format |
+| STRIDE Summary | xychart-beta bar chart + analytical observations |
+| Attack Surface Diagram | Multi-layer Mermaid flowchart |
+
+**Issues found:**
+
+1. **The STRIDE bar chart is the weakest visualization in the portfolio.** Six bars with
+   integer counts reads as a homework exercise, not a threat model artifact. A 2-axis
+   heat grid (STRIDE category × attack layer: RF / Protocol / Device / User) would
+   surface the structural insight that Information Disclosure concentrates in the User
+   layer while Elevation of Privilege concentrates in the Device layer. **This is a
+   10-minute upgrade with high visual payoff.**
+
+2. **MITRE ATT&CK technique IDs are mixed vintage.** Mobile threat #1 uses `T1476`
+   which was deprecated in favor of `T1476.001` and later `T1660` in ATT&CK v14.
+   Mobile threat #2 uses `T1660 Phishing` (current). Mobile threat #5 uses
+   `T1638` — verify this is still current. **Recommendation: audit all technique IDs
+   against the current ATT&CK Mobile Matrix and update deprecated references.**
+
+3. **No risk severity scoring.** Each threat has qualitative impact (Low/Medium/High/
+   Critical) but no formal scoring (likelihood × impact matrix). The case study
+   mentions CVSS scoring and risk heat maps in the methodology section — the threat
+   model is where these should be demonstrated. **Recommendation: add a 5×5 risk
+   heat map for the 12 threats.**
+
+4. **The attack surface diagram lacks a defensive control overlay.** Currently shows
+   threat → layer → attacker flow. Adding a second column showing controls at each
+   layer would create a "before/after" effect that demonstrates security value.
+
+### BYOD_POLICY_FRAMEWORK.md (243 lines)
+
+**Grade: A-**
+
+| Criterion | Assessment |
+|---|---|
+| BYOD Spectrum diagram | Excellent — COPE→CYOD→Tiered→Unrestricted with color-coding |
+| Policy Decision Matrix | Strong — 5-dimension × 3-sensitivity grid |
+| MDM Control Categories | Comprehensive — 7 categories with detailed sub-items |
+| NAC Enforcement Tiers | Great visualization — flowchart + table |
+| Zero Trust Integration | 5 patterns, well-structured |
+| Reference Architecture | Clean control-plane/data-plane Mermaid diagram |
+| Implementation Phasing | 4-phase table with duration and activities |
+
+**Issues found:**
+
+1. **References Azure AD (now Microsoft Entra ID).** The reference architecture diagram
+   labels the identity provider as "Azure AD" which was rebranded to "Microsoft Entra ID"
+   in July 2023. An employer at a Microsoft shop will notice this is stale.
+   **Recommendation: update to "Microsoft Entra ID" with a parenthetical "(formerly
+   Azure AD)" for clarity.**
+
+2. **The document synthesizes well but doesn't cite its own sources.** The MDM Control
+   Categories section reads like vendor documentation synthesis (Intune, Workspace ONE,
+   Jamf) but doesn't cite which vendor documents informed each category. Adding "per
+   NIST SP 800-124r2 §X" or "per Intune MAM documentation" would add credibility.
+
+3. **Missing: user experience considerations.** The framework covers security controls
+   exhaustively but says nothing about user friction, help-desk ticket volume, or
+   employee satisfaction. An employer knows the #1 reason BYOD policies fail is user
+   resistance. Adding a 2-3 line note on "balancing security with usability" would
+   show business awareness.
+
+### EVIDENCE_INDEX.md (45 lines)
+
+**Grade: C+**
+
+| Criterion | Assessment |
+|---|---|
+| Lab Submissions section | Good — links with caption summaries |
+| Capstone Deliverables section | Good — clearly documents each PDF's content |
+| Screenshots section | **Empty** — naming conventions exist, zero actual screenshots |
+
+**Issues found:**
+
+1. **The Screenshots section is entirely aspirational.** It documents naming conventions
+   for screenshots that don't exist. This is the single most damaging empty reference
+   in the portfolio. **Recommendation: either populate with 6-10 extracted PNGs or
+   remove the Screenshots section entirely.** An empty section with naming conventions
+   is worse than no section at all — it signals uncompleted work.
+
+2. **Missing: grade/score display.** If any academic grades are available (without
+   violating privacy), showing lab scores would validate competency claims.
+
+### SCRIPTS_README.md (~30 lines)
+
+**Grade: D+**
+
+| Criterion | Assessment |
+|---|---|
+| Structure | Adequate — two sections for student and external scripts |
+| Safety Notes | Good — ethical use reminders |
+| Actual content | **None** — both sections say "No scripts authored" |
+
+**Issues found:**
+
+1. **This file's existence does more harm than good.** The root README references
+   `scripts/` as "student-authored automation" and `SCRIPTS_README.md` as
+   documentation. But the file itself admits "This course was primarily analytical and
+   policy-focused rather than automation-focused." **This is honest, which is good, but
+   the contradiction with the root README's implication of student-authored scripts is
+   bad.** Recommendation:
+   - If the candidate has ANY automation artifacts (Nmap wrapper scripts, Wireshark
+     filter expressions, MDM policy JSON templates, Bash one-liners from the labs),
+     add them here
+   - Otherwise, remove the `scripts/` and `scripts-extra/` directory references from
+     the root README and convert SCRIPTS_README.md to a brief note in the course README
+
+---
+
+## Deep-Dive: Visualization Gap Analysis
+
+### Current visualization inventory (complete)
+
+| # | Visualization | File | Type | Employer Impact |
+|---|---|---|---|---|
+| 1 | Certification roadmap | `README.md` | flowchart | High — shows career planning |
+| 2 | Defense in depth block diagram | `README.md` | block-beta | High — architectural thinking |
+| 3 | Wireless threat landscape | `README.md` | flowchart | High — attack→defense mapping |
+| 4 | Cyber kill chain 7-phase | `README.md`, `CYBER_KILL_CHAIN_ANALYSIS.md` | flowchart | High — frameworks knowledge |
+| 5 | 12-week timeline | `README.md` | timeline (collapsed) | Medium — invisible by default |
+| 6 | Course foundation/advanced flow | Course `README.md` | flowchart | Medium |
+| 7 | Course Gantt schedule | Course `README.md` | gantt | Medium |
+| 8 | Lab skills progression | `WEEKLY_LABS_SUMMARY.md` | flowchart | Medium — role evolution |
+| 9 | STRIDE bar chart | `WIRELESS_THREAT_MODEL.md` | xychart-beta | Low — simplistic |
+| 10 | Attack surface layered flow | `WIRELESS_THREAT_MODEL.md` | flowchart | Medium |
+| 11 | BYOD spectrum | `BYOD_POLICY_FRAMEWORK.md` | flowchart | High — employer vocabulary |
+| 12 | NAC enforcement tiers | `BYOD_POLICY_FRAMEWORK.md` | flowchart | High — practical decision tree |
+| 13 | Zero Trust reference architecture | `BYOD_POLICY_FRAMEWORK.md` | flowchart | High — architectural maturity |
+| 14 | Topic progression | `WEEKLY_TOPIC_MAP.md` | flowchart | Low — simple |
+
+**Total: 14 Mermaid diagrams using 5 different diagram types.**
+
+### Visualization strengths
+
+- **Diagram variety** (flowchart, block-beta, timeline, gantt, xychart-beta) signals
+  tooling fluency and avoids visual monotony
+- **Color-coding is consistent** — defensive controls in green, attacks in red/orange,
+  neutral in blue/yellow
+- **Each diagram carries analytical meaning** — none are decorative
+- **The BYOD spectrum and NAC enforcement tier diagrams are genuinely employer-grade** —
+  these could appear in a consulting deck and not look out of place
+
+### Critical visualization gaps (ranked by employer impact)
+
+| Priority | Missing Visualization | Where to Add | Impact | Effort |
+|---|---|---|---|---|
+| **1** | **Bluegreen Media network topology** (10 APs, WLAN controller, firewall, IDS, guest patio, VLANs, remote users) | `CASE_STUDY_CAPSTONE.md` | **Critical** — anchors entire case study | 1.5h |
+| **2** | **Lab 3 heatmap screenshot** extracted from PDF | `WEEKLY_LABS_SUMMARY.md` | **High** — makes site survey work visible | 30min |
+| **3** | **Combined 3-recommendation implementation Gantt** (NAC + MDM + WIPS overlapping rollout) | `CASE_STUDY_CAPSTONE.md` | **High** — project management signal | 1h |
+| **4** | **5×5 risk heat map** for the 12 cataloged threats | `WIRELESS_THREAT_MODEL.md` | **High** — proves methodology, not just describes it | 1h |
+| **5** | **Lab 1 GHostAPd before→after screenshot** | `WEEKLY_LABS_SUMMARY.md` | **Medium** — shows hands-on work | 30min |
+| **6** | **STRIDE × Attack Layer heat grid** replacing the bar chart | `WIRELESS_THREAT_MODEL.md` | **Medium** — converts weak visual to strong | 30min |
+| **7** | **NAC vendor comparison matrix** (Cisco ISE / Aruba ClearPass / Forescout) | `CASE_STUDY_CAPSTONE.md` | **Medium** — vendor landscape awareness | 2h |
+| **8** | **Threat→Control Sankey diagram** (12 threats → WLAN/Mobile/ZT controls → corporate data) | `WIRELESS_THREAT_MODEL.md` | **Medium** — visually impressive | 1h |
+| **9** | **Before/After metrics chart** per strategic recommendation | `CASE_STUDY_CAPSTONE.md` | **Medium** — quantifies security value | 45min |
+| **10** | **MDM vendor comparison** (Intune / Workspace ONE / Jamf / MaaS360) | `BYOD_POLICY_FRAMEWORK.md` | **Low-Medium** — Intune-only raises questions | 2h |
+
+### Visualizations to improve (existing)
+
+| Diagram | Current State | Recommended Improvement |
+|---|---|---|
+| STRIDE bar chart (#9) | Simple 6-bar chart | STRIDE × Layer heat grid |
+| 12-week timeline (#5) | Collapsed in `<details>` | Expand or replace with visible badge |
+| Course Gantt (#7) | 1-day duration bars may compress | Test rendering; use milestones for lab/capstone weeks |
+| Kill chain flowchart (#4) | Color gradient without legend | Add 1-line legend below |
+
+---
+
+## Deep-Dive: Information Utilization Audit
+
+A systematic check of whether the portfolio fully utilizes all available source material.
+Source material includes: 6 PDFs (~12,500 words), course lectures (not redistributable),
+lab environments, and the candidate's own analytical work.
+
+### Information that IS well-utilized
+
+| Source Material | Utilization in MD | Quality |
+|---|---|---|
+| Lab 1 core findings (security config, LinSSID scan) | Compressed but captured | Good |
+| Lab 3 dead zone measurements (BSSIDs, dBm, SIR) | Specific numbers preserved | Good |
+| Lab 5 passive/active fingerprinting comparison | 4-tool matrix + UA table | Strong |
+| Case study scenario (Bluegreen Media profile) | Faithfully reproduced | Strong |
+| Case study 3 WLAN threats | Detailed narrative | Strong |
+| Case study 3 mobile threats | Detailed narrative | Strong |
+| Case study 3 strategic recommendations | Architecture + timeline | Strong |
+| NIST/ISO frameworks | Referenced throughout | Good |
+| MITRE ATT&CK Mobile | Mapped to each threat | Good |
+| STRIDE methodology | Applied to all 12 threats | Strong |
+
+### Information that is UNDERUTILIZED or MISSING
+
+| # | Source Material | Where It Exists | Current Status in Portfolio | Value If Surfaced |
+|---|---|---|---|---|
+| 1 | **Kismet hidden-SSID decloaking** — `TheGatesofHeck` hidden network discovered and decloaked | Lab 01 PDF, Section 2 | **Completely absent from MD** | High — shows attacker-perspective recon skill |
+| 2 | **WEP detection** — `BananaStand` network identified as WEP-encrypted | Lab 01 PDF, Section 2 | **Absent** | Medium — protocol identification |
+| 3 | **Probe request analysis** — `youcantseeme` detected in probe requests | Lab 01 PDF, Section 2 | **Absent** | Medium — wireless forensics awareness |
+| 4 | **CTF-style gateway traversal** — `Heck Proxy` challenge at coordinates, password `tedfoottwo` | Lab 01 PDF, Section 3 | **Absent** | High — problem-solving, CTF experience |
+| 5 | **Mininet-WiFi topology scripting** — `py ap1.position`, antenna gain configuration | Lab 01 PDF | **Absent** | Medium — simulation/lab scripting skill |
+| 6 | **Specific heatmap images** from Lab 3 | Lab 03 PDF, 13+ screenshots | **Described in text but not extracted** | Critical — single highest-impact visual |
+| 7 | **SIR sweet-spot analysis** — GM area right side +13dB vs left +3-5dB with concrete placement recommendation | Lab 03 PDF, Part 3 | **Partially in MD but buried** | High — consulting-style deliverable |
+| 8 | **Edge/Chromium dual-token observation** — `Chrome/` + `Edg/` tokens reveal Chromium base | Lab 05 PDF | **In MD but not emphasized** | Medium — detail shows genuine analysis |
+| 9 | **Cookie tracking protection analysis** — Cover Your Tracks assessment | Lab 05 PDF, Section 3 | **Touched on but underemphasized** | Medium — privacy expertise |
+| 10 | **Case study references (10 sources)** — SANS, Gartner, Forrester, Verizon DBIR, CSA, OWASP, IEEE, CIS, CISA, NIST SP 800-53 | Case study PDF references section | **Partially reproduced; claims not tied to sources** | High — credibility of statistics |
+| 11 | **Presentation slide content** — 10 slides with executive summary, threat landscape, recommendations | CaseStudy_Final_Presentation.pdf | **Agenda listed; actual slide content not extracted** | Medium — shows presentation skill |
+| 12 | **CI pipeline details** — 8 workflows verifying link integrity, secrets, formatting, pages | `.github/workflows/` | **Badges shown; purpose not explained** | Low-Medium — engineering maturity signal |
+| 13 | **CVSS scoring** — methodology described in case study | Case study PDF, methodology section | **Described but never executed** | High — gap between claimed and demonstrated |
+| 14 | **Risk register** — mentioned in Part 2 | Case study PDF, Part 2 | **Described but never produced** | High — same gap |
+| 15 | **Risk heat map** — promised in methodology | Case study PDF, Part 2 | **Described but never produced** | High — same gap |
+
+### Utilization rate summary
+
+- **Well-utilized:** 10 of 25 identified content blocks (~40%)
+- **Underutilized/missing:** 15 of 25 identified content blocks (~60%)
+- **The portfolio captures ~75% of the case study value but only ~50% of the lab value.**
+  Lab 1 is the biggest underutilization — roughly two-thirds of the student's hands-on
+  work is invisible in the MD layer.
+
+---
+
+## Employer Red Flags & Mitigations
+
+| # | Red Flag | Severity | Current Impact | Mitigation |
+|---|---|---|---|---|
+| 1 | Empty `screenshots/` directory | Critical | "Evidence that doesn't exist" | Populate with 6-10 extracted PNGs or remove references (P0.2) |
+| 2 | Empty `scripts/` directory | Critical | "Claims automation without artifacts" | Populate or remove references (P0.3) |
+| 3 | Quiz-screenshot PDF named "Cyber Kill Chain Analysis" | Critical | "Padding" | Rename or replace (P0.1) |
+| 4 | Template-slide presentation | High | "Doesn't communicate" | Add content or add caveat note (P1.7) |
+| 5 | Uncited industry statistics (5 figures) | High | "Numbers to sound authoritative" | Add primary sources (P0.4) |
+| 6 | No cost estimates on recommendations | High | "Didn't think about budget" | Add ROM costs (P1.3) |
+| 7 | Claimed methodology (CVSS, risk register, heat map) not demonstrated | High | "Knows vocabulary but hasn't used frameworks" | Produce one of each (P1.5) |
+| 8 | "12-week" framing when 4 weeks are empty | Medium | Looks inflated | Reframe as "8 sessions + 3 labs + 1 capstone" (P0.5) |
+| 9 | Azure AD naming (not Microsoft Entra ID) | Medium | "Outdated vendor knowledge" | Update (P2.6) |
+| 10 | Deprecated MITRE ATT&CK technique IDs | Medium | "Stale threat intelligence" | Audit and update (P2.7) |
+| 11 | No production/real-hardware experience | Expected | Normal for entry-level | Add growth plan (P1.6) |
+| 12 | No certifications held | Expected | Normal for recent graduate | Already transparently caveated ✓ |
+| 13 | Simulated labs only | Expected | Normal for coursework | Already acknowledged ✓ |
+| 14 | 1-year gap between course completion and portfolio publication | Low | Could be positive or negative | Add publication context note (P2.8) |
+
+---
+
+## Actionable Improvements by Priority
+
+### Priority 0 (Do before submitting to any employer) — ~4 hours
+
+| # | Action | Files Affected | Effort |
+|---|---|---|---|
+| 0.1 | Rename `CaseStudy_Cyber_Kill_Chain_Analysis.pdf` → `CyberKillChain_Quiz_Evidence.pdf` OR export `CYBER_KILL_CHAIN_ANALYSIS.md` to PDF and replace | assignments/, EVIDENCE_INDEX.md, WEEKLY_TOPIC_MAP.md, CASE_STUDY_CAPSTONE.md, README.md | 30 min |
+| 0.2 | Either populate `screenshots/` with 6-10 extracted key PNGs OR remove the directory references from README.md and EVIDENCE_INDEX.md | screenshots/, README.md, EVIDENCE_INDEX.md | 1-2 hr |
+| 0.3 | Either populate `scripts/` with real candidate-authored scripts OR remove the references from README.md | scripts/, scripts-extra/, README.md, SCRIPTS_README.md | 1-2 hr |
+| 0.4 | Add a "Sources for cited statistics" footnote section to `CASE_STUDY_CAPSTONE.md` | CASE_STUDY_CAPSTONE.md | 30 min |
+| 0.5 | Clarify 12-week framing: rewrite as "8 instructor-led sessions + 3 labs + 1 capstone" in root README and config.json | README.md, portfolio/config.json | 15 min |
+
+### Priority 1 (Strongly recommended) — ~8-10 hours
+
+| # | Action | Files Affected | Effort |
+|---|---|---|---|
+| 1.1 | Create Bluegreen Media network topology diagram (Mermaid or draw.io PNG) | CASE_STUDY_CAPSTONE.md, new image file | 1.5 hr |
+| 1.2 | Extract and embed key Lab 03 heatmap screenshot into `WEEKLY_LABS_SUMMARY.md` | screenshots/, WEEKLY_LABS_SUMMARY.md | 1 hr |
+| 1.3 | Add rough ROM cost estimates to all 3 strategic recommendations | CASE_STUDY_CAPSTONE.md | 1 hr |
+| 1.4 | Create combined 3-recommendation implementation Gantt (overlapping NAC+MDM+WIPS) | CASE_STUDY_CAPSTONE.md | 1 hr |
+| 1.5 | Add 5x5 risk heat map for the 12 cataloged threats | WIRELESS_THREAT_MODEL.md | 1 hr |
+| 1.6 | Add "Next Steps Toward Production Experience" section to root README | README.md | 30 min |
+| 1.7 | Rebuild presentation deck with speaker notes OR add clarification note | CaseStudy_Final_Presentation.pdf, CASE_STUDY_CAPSTONE.md | 2-3 hr |
+| 1.8 | Surface Kismet decloaking and CTF gateway traversal from Lab 01 PDF into MD | WEEKLY_LABS_SUMMARY.md | 45 min |
+| 1.9 | Move "Why Wireless & Mobile Security?" above certification table in root README | README.md | 15 min |
+
+### Priority 2 (Differentiation) — ~6-8 hours
+
+| # | Action | Files Affected | Effort |
+|---|---|---|---|
+| 2.1 | Add NAC vendor comparison matrix (Cisco ISE / Aruba ClearPass / Forescout) | CASE_STUDY_CAPSTONE.md or new doc | 2 hr |
+| 2.2 | Add MDM vendor comparison matrix (Intune / Workspace ONE / Jamf) | BYOD_POLICY_FRAMEWORK.md | 2 hr |
+| 2.3 | Add control → NIST/ISO reference cross-walk table | CYBER_KILL_CHAIN_ANALYSIS.md or new doc | 1.5 hr |
+| 2.4 | Convert STRIDE bar chart to STRIDE × Attack Surface heat grid | WIRELESS_THREAT_MODEL.md | 45 min |
+| 2.5 | Add Sankey diagram threat→control flow | WIRELESS_THREAT_MODEL.md | 1 hr |
+| 2.6 | Update "Azure AD" to "Microsoft Entra ID" throughout | BYOD_POLICY_FRAMEWORK.md | 15 min |
+| 2.7 | Audit MITRE ATT&CK Mobile technique IDs against current matrix | WIRELESS_THREAT_MODEL.md | 30 min |
+| 2.8 | Add "Portfolio Publication Context" note (2025→2026 gap) | README.md | 15 min |
+
+### Priority 3 (Polish) — ~3-4 hours
+
+| # | Action | Files Affected | Effort |
+|---|---|---|---|
+| 3.1 | Add legends to color-coded Mermaid diagrams | README.md, CYBER_KILL_CHAIN_ANALYSIS.md | 30 min |
+| 3.2 | Cross-link specific PDF pages from MD narratives | All MD files in course folder | 1 hr |
+| 3.3 | Expand EVIDENCE_INDEX.md with 20-40 entries | EVIDENCE_INDEX.md | 1 hr |
+| 3.4 | Add "What CI verifies" note explaining workflow badges | README.md | 15 min |
+| 3.5 | Deduplicate Architecture Principles (root README vs course README) | README.md, course README.md | 15 min |
+| 3.6 | Collapse repository structure section in root README to `<details>` or table | README.md | 15 min |
+| 3.7 | Enable GitHub Pages and add portfolio URL badge | _config.yml, README.md | 30 min |
+| 3.8 | Add "Time on task" to Lab 1 writeup for consistency | WEEKLY_LABS_SUMMARY.md | 5 min |
+| 3.9 | Add user-experience/friction note to BYOD framework | BYOD_POLICY_FRAMEWORK.md | 15 min |
+
+---
+
+## Recommended Additional Visualizations
+
+Ranked by employer-impact-per-hour-of-work:
+
+### Must-add (high impact, low cost)
+
+1. **Bluegreen Media topology diagram** — 1.5h effort, huge payoff. Anchors the entire
+   capstone in a single image.
+2. **Extracted heatmap from Lab 03 PDF** — 30min effort, makes the site-survey
+   work visible.
+3. **Combined 3-recommendation Gantt** — 1h effort, shows project-management
+   competency.
+
+### Should-add (high impact, medium cost)
+
+4. **5×5 risk heat map** — visual evidence that risk-assessment methodology was
+   actually applied, not just described.
+5. **Lab 1 GHostAPd before/after screenshots** — shows hands-on configuration work.
+6. **NAC vendor comparison matrix** — demonstrates vendor-landscape awareness.
+
+### Nice-to-have (differentiation)
+
+7. **Threat-to-Control Sankey diagram** — Mermaid supports, reads impressively.
+8. **STRIDE × Attack Surface heat grid** — converts weak visualization into strong one.
+9. **Kill chain × control coverage matrix** — visual version of existing table.
+10. **MDM vendor comparison matrix** — answers the question Intune-only raises.
+
+---
+
+## Final Recommendation
+
+**Overall grade: B+ (strong entry-level portfolio with specific, addressable gaps).**
+
+**Ship the portfolio AFTER completing Priority 0 items (~4 hours of work).** The
+Priority 0 list is the difference between "strong entry-level candidate" and "strong
+entry-level candidate with noticeable gaps."
+
+Priority 1 items (~8-10 hours) convert the portfolio from B+ to A-. They are high
+ROI and should happen before applying to any role that takes the portfolio seriously.
+
+Priority 2 items (~6-8 hours) are **differentiation moves** — they distinguish this
+portfolio from the 30-40 other candidates applying for the same role. A reviewer who
+sees a vendor comparison matrix or a risk heat map will remember this portfolio.
+
+Priority 3 items (~3-4 hours) are **professionalism polish** — worth doing but not gating.
+
+### What this portfolio does NOT need
+
+- **More content.** The documents are already long enough and more writing adds noise.
+- **More Mermaid diagrams** (except the specific ones recommended). Diagram volume is good.
+- **Restructuring.** The architecture is sound and consistent.
+- **A different tone.** The voice is appropriate — technical but business-aware.
+- **More certification claims.** The honest framing is a strength, not a weakness.
+
+### What distinguishes this portfolio from its peer group
+
+Most entry-level cybersecurity portfolios reviewers see are:
+
+1. Lists of TryHackMe/HTB room completions with no written synthesis
+2. Screenshots of labs with no narrative
+3. Certifications earned with no demonstrated reasoning behind why
+
+This portfolio is **explicitly narrative-first, reasoning-forward, and business-aware.**
+That is its competitive advantage. The improvements recommended above protect that
+advantage by closing the specific gaps that undercut the narrative.
+
+### Grade impact projection
+
+| Priority Level | Current Grade | After Completion | Key Driver |
+|---|---|---|---|
+| P0 complete | B+ | B+ (solid, no red flags) | Removes credibility-damaging gaps |
+| P0 + P1 complete | B+ | A- | Adds visual evidence, cost awareness, production path |
+| P0 + P1 + P2 complete | B+ | A | Vendor comparison + framework execution = differentiation |
+| All priorities | B+ | A+ | Portfolio rivals candidates with 1-2 years experience |
+
+---
+
+## Appendix: File-level Observations
+
+### Files reviewed
+
+- `README.md` (334 lines, root employer-facing)
+- `CC/Winter 2025/Mobile Wireless Security - Mohamed Jbeili - CSC-7306/README.md` (207 lines, course landing)
+- `CC/*/WEEKLY_TOPIC_MAP.md` (116 lines)
+- `CC/*/WEEKLY_LABS_SUMMARY.md` (178 lines)
+- `CC/*/CASE_STUDY_CAPSTONE.md` (252 lines)
+- `CC/*/CYBER_KILL_CHAIN_ANALYSIS.md` (199 lines)
+- `CC/*/WIRELESS_THREAT_MODEL.md` (229 lines)
+- `CC/*/BYOD_POLICY_FRAMEWORK.md` (243 lines)
+- `CC/*/EVIDENCE_INDEX.md` (45 lines)
+- `CC/*/SCRIPTS_README.md` (~30 lines)
+- `CC/*/assignments/README.md` (33 lines)
+- `portfolio/config.json` (48 lines)
+- `ROADMAP.md` (60 lines)
+- `docs/README.md`, `docs/Runbook.md`, `docs/Checklist.md`, `docs/sessions.md`
+- `.github/workflows/` (8 workflow files)
+- `_config.yml`, `SECURITY.md`, `CONTRIBUTING.md`, `LICENSE`
+- All 6 PDFs in `assignments/` (via agent extraction)
+
+### Lines of narrative (student-authored MD)
+
+**~1,900 lines** across 10 portfolio documents. This is substantial and consistent.
+
+### Word count of PDF submissions
+
+- Lab 01: ~3,769 words (21 screenshots + analysis)
+- Lab 03: ~639 words (13+ screenshots, mostly instructor prompts)
+- Lab 05: ~1,092 words (passive/active comparison)
+- Case Study main: ~5,500 words (3-part security plan)
+- Presentation: ~1,500 words (bullet-point outlines)
+- Kill Chain quiz: ~50 words (2-page quiz screenshots)
+
+**Total source material: ~12,500 words in PDFs + ~1,900 lines of MD = substantial
+corpus.** The risk is not lack of content; it is **surfacing the right content to the
+reviewer**.
+
+---
+
+*Assessment compiled 2026-04-05 (revision 2) · Reviewer persona: Senior Security
+Engineer / Hiring Manager · Entry-level wireless/mobile security analyst role ·
+Full re-assessment: 1,336 lines covering 10 portfolio docs, 6 PDFs, 8 CI workflows*
