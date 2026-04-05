@@ -105,7 +105,7 @@ Threats are classified using **STRIDE** (Spoofing, Tampering, Repudiation, Infor
 | Motivation | Data theft, credential capture, device surveillance, corporate espionage |
 | Impact | Critical — persistent device compromise |
 | STRIDE | Spoofing, Tampering, Information Disclosure, Elevation of Privilege |
-| MITRE ATT&CK Mobile | T1476 Deliver Malicious App via Other Means |
+| MITRE ATT&CK Mobile | T1660 Phishing (delivery) · T1407 Download New Code at Runtime (persistence) — *replaces deprecated T1476* |
 | Mitigations | MDM app whitelisting · App store validation · Mobile Threat Defense (MTD) · App containerization · Jailbreak/root detection |
 
 ### 2. Smishing / Vishing / QR Phishing
@@ -167,19 +167,41 @@ Threats are classified using **STRIDE** (Spoofing, Tampering, Repudiation, Infor
 
 Count of threats per STRIDE category across the 12 cataloged threats:
 
-```mermaid
-xychart-beta
-    title "Threats by STRIDE Category"
-    x-axis ["Spoofing", "Tampering", "Repudiation", "Info Disclosure", "DoS", "Elevation of Priv"]
-    y-axis "Threat Count" 0 --> 8
-    bar [4, 4, 0, 7, 1, 4]
-```
+| STRIDE Category | RF Perimeter | Protocol Layer | Mobile Device | User Layer | **Total** |
+|---|---|---|---|---|---|
+| **Spoofing** | Evil Twin · Rogue AP | | | Smishing/Vishing · Unsecured Wi-Fi | **4** |
+| **Tampering** | Rogue AP | KRACK | Malicious Apps · Jailbreak/Root | | **4** |
+| **Repudiation** | | | | | **0** |
+| **Information Disclosure** | Wardriving · Evil Twin | KRACK · Dragonblood | Lost/Stolen Device | Smishing · Unsecured Wi-Fi · Cloud Sync | **7** |
+| **Denial of Service** | Deauth/DoS | | | | **1** |
+| **Elevation of Privilege** | Rogue AP | Dragonblood | Malicious Apps · Jailbreak/Root | | **4** |
 
 **Observations:**
 
 - **Information Disclosure dominates** (7/12 threats) — wireless and mobile are inherently about data accessibility across trust boundaries
 - **No repudiation threats** in this catalog — wireless attacks rarely revolve around deniability
 - **Denial of Service appears only once** — deauth attacks are the main availability concern; most wireless threats target confidentiality
+
+### Risk Heat Map (Likelihood × Impact)
+
+Each of the 12 cataloged threats plotted on a 5×5 risk matrix. Likelihood and impact assessed qualitatively based on the Bluegreen Media scenario (60-employee SMB, 10 APs, BYOD, pre-IPO).
+
+| | **Impact: Negligible** | **Impact: Low** | **Impact: Moderate** | **Impact: High** | **Impact: Critical** |
+|---|---|---|---|---|---|
+| **Likelihood: Almost Certain** | | | | Unsecured Public Wi-Fi | Data Leakage via Cloud Sync |
+| **Likelihood: Likely** | | | Deauth/DoS | Smishing/Vishing | Malicious Apps |
+| **Likelihood: Possible** | | | | Evil Twin AP · Lost/Stolen Device | Rogue AP · Jailbreak/Root |
+| **Likelihood: Unlikely** | | Wardriving (recon only) | | KRACK | |
+| **Likelihood: Rare** | | | | Dragonblood | |
+
+**Risk treatment priorities (red = mitigate immediately, orange = mitigate within 90 days):**
+
+- **Critical risk (top-right):** Data Leakage via Cloud Sync, Malicious Apps, Rogue AP, Jailbreak/Root — require immediate MDM + CASB + NAC controls
+- **High risk:** Evil Twin, Lost/Stolen Device, Smishing, Unsecured Public Wi-Fi — require WIPS + MDM + user training
+- **Medium risk:** Deauth/DoS, KRACK — require PMF + firmware patching
+- **Low risk:** Wardriving (recon only), Dragonblood (rare in practice with H2E) — monitor via WIPS
+
+> **Methodology:** Likelihood based on threat actor accessibility and Bluegreen Media's current control posture (pre-remediation). Impact based on potential data exposure, business disruption, and IPO-readiness implications. Assessment follows NIST SP 800-30 qualitative risk analysis guidance.
 
 ## Attack Surface Diagram
 
@@ -214,6 +236,33 @@ flowchart TB
     User -.->|Enables| Device
     Device -->|Exfiltrates to| Attacker((Attacker))
 ```
+
+### Threat-to-Control Flow
+
+How the 12 cataloged threats flow through the three defensive control layers before reaching corporate data:
+
+```mermaid
+sankey-beta
+
+Wardriving,WLAN Defense,1
+Rogue AP,WLAN Defense,1
+Evil Twin,WLAN Defense,1
+Deauth DoS,WLAN Defense,1
+KRACK,WLAN Defense,1
+Dragonblood,WLAN Defense,1
+Malicious Apps,Mobile Defense,1
+Smishing Vishing,Mobile Defense,1
+Cloud Sync Leakage,Mobile Defense,1
+Jailbreak Root,Mobile Defense,1
+Unsecured Wi-Fi,Mobile Defense,1
+Lost Stolen Device,Mobile Defense,1
+WLAN Defense,Zero Trust Layer,6
+Mobile Defense,Zero Trust Layer,6
+Zero Trust Layer,Corporate Data Protected,10
+Zero Trust Layer,Residual Risk,2
+```
+
+> **Reading the diagram:** Each threat enters its primary control layer (WLAN or Mobile Defense). Both layers feed into the Zero Trust Layer for continuous verification. The majority of threats are neutralized before reaching corporate data; residual risk represents threats that bypass multiple layers (e.g., zero-day + compromised credential + compliant-looking device).
 
 ## References
 
