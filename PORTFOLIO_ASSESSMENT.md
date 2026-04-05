@@ -16,6 +16,8 @@
 ## Table of Contents
 
 - [Executive Verdict](#executive-verdict)
+- [Post-Remediation Assessment (2026-04-05)](#post-remediation-assessment-2026-04-05)
+- [Remediation Status](#remediation-status)
 - [Scoring Rubric](#scoring-rubric)
 - [Strengths](#strengths-what-works-well)
 - [Weaknesses](#weaknesses-what-would-cause-a-reject-or-a-doubt)
@@ -119,6 +121,129 @@ All 31 items from the original assessment have been implemented:
 | P3.7 | Add GitHub Pages badge | ✅ Done | 4th badge in root README header |
 | P3.8 | Add Lab 1 time-on-task | ✅ Done | `2h 10m` annotation in WEEKLY_LABS_SUMMARY.md |
 | P3.9 | Add UX friction note to BYOD framework | ✅ Done | UX impact table + design principle in BYOD_POLICY_FRAMEWORK.md |
+
+---
+
+## Post-Remediation Assessment (2026-04-05)
+
+> Fresh independent re-assessment after all 31 remediation items were implemented,
+> validated, and committed. Four assessment dimensions evaluated by separate review
+> agents simulating a Senior Security Engineer / Hiring Manager at a boutique MSSP.
+
+### Overall Post-Remediation Scores
+
+| Dimension | Pre-Remediation | Post-Remediation | Grade | Notes |
+|---|---|---|---|---|
+| **Formatting & Structure** | B+ | A (9.2/10) | ⬆️ | 10/10 docs score A or A-; zero critical formatting failures; cross-document consistency excellent |
+| **Visualizations** | B+ | A- (8.5/10) | ⬆️ | 16 Mermaid diagrams + 25+ tables; 5 diagram types; 2 rendering risks (block-beta, sankey-beta) |
+| **Information Utilization** | C+ | B (82%) | ⬆️ | Strong synthesis; remaining gaps are depth/quantification, not coverage |
+| **Employer Readiness** | B+ | A- | ⬆️ | Would advance to technical screen; no red flags; honest credential framing praised |
+
+### Document-Level Formatting Scores
+
+| Document | Score | Hiring Signal |
+|---|---|---|
+| Root README.md | A- | Corporate-ready overview; missing permalink in YAML (micro-issue) |
+| Course README.md | A | Benchmark-quality documentation |
+| WEEKLY_TOPIC_MAP.md | A | Curriculum mapping executed professionally |
+| WEEKLY_LABS_SUMMARY.md | A | Gold-standard lab portfolio documentation |
+| CASE_STUDY_CAPSTONE.md | A- | Strong; Recommendations section could use H4 subsectioning |
+| CYBER_KILL_CHAIN_ANALYSIS.md | A | Expert-level technical communication |
+| WIRELESS_THREAT_MODEL.md | A- | Comprehensive threat catalog; intentionally long but well-structured |
+| BYOD_POLICY_FRAMEWORK.md | A | Authoritative framework documentation |
+| EVIDENCE_INDEX.md | A | Professional reference documentation |
+| SCRIPTS_README.md | A | Appropriately scoped; safety-first |
+
+### Visualization Inventory
+
+| Type | Count | Files |
+|---|---|---|
+| flowchart | 10 | README, Course README, Kill Chain, BYOD, Threat Model, Labs Summary, Topic Map |
+| gantt | 2 | Course README, Case Study Capstone |
+| timeline | 1 | Root README |
+| block-beta | 1 | Root README (Defense in Depth) |
+| sankey-beta | 1 | Threat Model |
+| Tables | 25+ | All documents |
+
+**Rendering risks:** `block-beta` and `sankey-beta` are experimental Mermaid features.
+GitHub renders them but older viewers or forks may not. No fallback tables are provided.
+
+### Remaining Weaknesses (Post-Remediation)
+
+These are NOT red flags — they are growth areas that distinguish "strong entry-level" from "mid-level ready."
+
+**Weakness 1 — No Defense Effectiveness Validation (Severity: Medium)**
+
+The portfolio is 80% defensive architecture and 20% proof-it-works. Claims like "95% reduction
+in wireless attack dwell time" and "99% compliance rate" lack measured baselines. An employer
+wonders: "Did you validate these controls, or just design them?"
+
+*Mitigation path:* Add a "Defense Effectiveness" subsection to each lab showing before/after
+measurements (e.g., "MAC ACL tested via spoofed MAC from sta2-wlan0 → blocked as expected").
+
+**Weakness 2 — Entirely Academic (Severity: Low-Medium)**
+
+All labs are classroom exercises. No production deployments, no home-lab Intune enrollment, no
+real WIPS sensor installation. The "Next Steps" section acknowledges this honestly — but the
+gap limits hiring to junior analyst tracks.
+
+*Mitigation path:* Deploy Intune in a test tenant with real device enrollment. Document it.
+
+**Weakness 3 — Threat Model Lacks Quantification (Severity: Low)**
+
+Risk heat map is qualitative (Likelihood: "Almost Certain"). Missing CVSS-like scoring,
+probability estimates, or annualized loss expectancy. The STRIDE summary notes "Information
+Disclosure dominates (7/12)" but doesn't map this insight back to control prioritization.
+
+*Mitigation path:* Add quantified risk scores and explicit control-to-threat mapping matrix.
+
+**Weakness 4 — Missing "What Went Wrong" Narratives (Severity: Low)**
+
+Labs are presented as clean progressions. No troubleshooting, no failed attempts, no pivots.
+Employers value "here's what didn't work and how I fixed it" because it signals real experience.
+
+*Mitigation path:* Add "Lessons Learned" subsections to each lab narrative.
+
+**Weakness 5 — Visualization Color Inconsistency (Severity: Cosmetic)**
+
+Each Mermaid diagram independently chooses colors. No portfolio-wide palette (e.g., green =
+defensive, red = risk, blue = infrastructure). Not a defect, but standardization would elevate.
+
+### Remaining Visualization Gaps
+
+| Priority | Gap | File | Suggested Diagram |
+|---|---|---|---|
+| Nice-to-have | 802.1X authentication flow | BYOD_POLICY_FRAMEWORK.md | flowchart (supplicant → authenticator → RADIUS) |
+| Nice-to-have | BYOD enrollment workflow | BYOD_POLICY_FRAMEWORK.md | flowchart (user-initiated → IT approval → MDM enrollment) |
+| Nice-to-have | Wireless protocol comparison | WIRELESS_THREAT_MODEL.md | table (WPA2-PSK vs WPA2-Ent vs WPA3-SAE) |
+| Nice-to-have | Site survey workflow | WEEKLY_LABS_SUMMARY.md | flowchart (plan → measure → analyze → recommend) |
+| Nice-to-have | Incident response playbook | CYBER_KILL_CHAIN_ANALYSIS.md | flowchart (detect → contain → eradicate → recover) |
+
+### Employer Hiring Recommendation
+
+**Grade: A-** — Advance to initial technical screen.
+
+**Strengths that get through the door:**
+
+1. Honest credential framing (no overclaiming — rare and valued)
+2. Employer-centric structure (5/15/30-min Quick Start table)
+3. Business-context framing ("BYOD is a compensating control, not a default")
+4. Production-aware cost/vendor analysis (3 NAC vendors, 3 MDM vendors, ROM estimates)
+5. CI/CD hygiene (Gitleaks, markdownlint, link validation, Pages)
+6. Self-critique with documented remediation (this document)
+
+**Single strongest selling point:** The "Why Wireless & Mobile Security?" section — a 200-word
+synthesis demonstrating perspective, not just knowledge. Hiring managers remember candidates
+who can articulate *why* their field matters, not just *what* they studied.
+
+**Single biggest remaining weakness:** No production experience. All labs are simulated. The
+candidate designs solutions but hasn't deployed them. This limits hiring to junior analyst or
+internship tracks — which the candidate honestly acknowledges.
+
+**Recommended interview approach:** 30-minute technical phone screen covering: (1) walk-through
+of capstone case study and NAC vendor selection rationale, (2) one hands-on wireless threat
+scenario (e.g., "Your WIPS detected an evil twin matching your corporate SSID — walk me through
+your response"), and (3) realistic questions about next 12 months of professional development.
 
 ---
 
