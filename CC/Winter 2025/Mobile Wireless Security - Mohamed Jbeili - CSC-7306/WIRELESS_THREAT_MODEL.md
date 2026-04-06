@@ -13,6 +13,7 @@ permalink: /threats/
 - [Modeling Approach](#modeling-approach)
 - [WLAN Threat Catalog](#wlan-threat-catalog)
 - [Mobile Threat Catalog](#mobile-threat-catalog)
+- [Adjacent Wireless Threats — Bluetooth/BLE](#adjacent-wireless-threats--bluetoothble)
 - [STRIDE Summary](#stride-summary)
 - [Wireless Protocol Comparison](#wireless-protocol-security-comparison)
 - [Attack Surface Diagram](#attack-surface-diagram)
@@ -163,6 +164,21 @@ Threats are classified using **STRIDE** (Spoofing, Tampering, Repudiation, Infor
 | STRIDE | Information Disclosure, Elevation of Privilege |
 | MITRE ATT&CK Mobile | T1420 File and Directory Discovery |
 | Mitigations | Mandatory device encryption · Strong lock (PIN + biometric) · Auto-lock timeout · Remote wipe via MDM · Selective wipe for BYOD |
+
+## Adjacent Wireless Threats — Bluetooth/BLE
+
+> While course content focused on Wi-Fi and mobile device security, adjacent wireless protocols present additional attack surface in BYOD environments.
+
+Bluetooth and Bluetooth Low Energy (BLE) are enabled by default on most BYOD smartphones, tablets, and laptops. In a 60-employee BYOD environment like Bluegreen Media, these protocols create passive attack surface even when corporate Wi-Fi controls are fully deployed.
+
+| Threat | STRIDE | MITRE Technique | Impact | Mitigation |
+|---|---|---|---|---|
+| **BlueBorne** (CVE-2017-0781 family) — Remote code execution via Bluetooth stack overflow; no pairing or user interaction required | Elevation of Privilege, Tampering | T1428 Exploitation of Remote Services | Critical — full device compromise over-the-air within ~10m range | MDM-enforced OS patching · Bluetooth disable policy when not in use · Network-level device quarantine for unpatched endpoints |
+| **BLE Tracking & Beacon Spoofing** — Passive tracking of persistent BLE advertisements; spoofed BLE beacons to trigger malicious actions on nearby devices | Information Disclosure, Spoofing | T1422 System Network Configuration Discovery · T1644 Generate Traffic from Victim | Medium — employee location tracking, social engineering enablement, phishing via spoofed beacon notifications | MAC address randomization enforcement · MDM policy restricting BLE beacon response · Disable unnecessary BLE services |
+| **KNOB Attack** (CVE-2019-9506) — Key Negotiation of Bluetooth forces entropy reduction to 1 byte, enabling brute-force of session key | Information Disclosure | T1040 Network Sniffing | High — real-time eavesdropping on Bluetooth communications (calls, file transfers, keyboard input) | Firmware updates enforcing minimum 7-byte entropy · MDM-managed Bluetooth stack updates · Avoid Bluetooth for sensitive data transfer |
+| **BIAS Attack** (CVE-2020-10135) — Bluetooth Impersonation Attacks on Secure connections; attacker impersonates previously paired device to establish unauthenticated session | Spoofing, Elevation of Privilege | T1638 Adversary-in-the-Middle | High — unauthorized access to paired device resources, session hijacking of Bluetooth peripherals | Firmware patches per Bluetooth SIG advisory · Mutual authentication enforcement · Remove stale pairings via MDM policy · Physical verification for new pairings |
+
+> **Scope note:** These threats are documented for completeness but were not included in the quantified risk assessment or STRIDE summary counts, which cover the 12 primary WLAN and mobile threats analyzed in the course curriculum. Organizations should assess BLE risk separately based on their Bluetooth usage profile.
 
 ## STRIDE Summary
 

@@ -16,6 +16,7 @@ permalink: /capstone/
 - [Part 3 — BYOD Policy Framework](#part-3--byod-policy-framework)
 - [Strategic Recommendations](#strategic-recommendations)
 - [Presentation Summary](#presentation-summary)
+- [Regulatory Compliance Mapping](#regulatory-compliance-mapping)
 - [Lessons Learned](#lessons-learned)
 
 ## Client Scenario
@@ -373,6 +374,18 @@ gantt
 **Artifact:** [CaseStudy_Final_Presentation.pdf](assignments/CaseStudy_Final_Presentation.pdf)
 
 > **Note for reviewers:** The presentation slides were designed as visual prompts for verbal delivery in an academic setting and contain category headers rather than detailed analysis. The substantive findings, specific risks, metrics, and recommendations are documented in full in this written plan and in [CYBER_KILL_CHAIN_ANALYSIS.md](CYBER_KILL_CHAIN_ANALYSIS.md). The slides should be evaluated as a delivery framework, not a standalone document.
+
+## Regulatory Compliance Mapping
+
+As Bluegreen Media pursues an IPO, its security controls will face scrutiny under **SOC 2 Type II** (required by enterprise customers and investors evaluating operational maturity) and **SOX IT General Controls** (mandatory once publicly traded). The three strategic recommendations directly map to these frameworks, converting security investments into audit-ready compliance artifacts.
+
+| Recommendation | SOC 2 Trust Service Criteria | SOX ITGC Category | Audit Evidence Generated |
+|---|---|---|---|
+| **NAC (802.1X)** | CC6.1 (Logical Access Controls) · CC6.6 (Boundary Protection) · CC6.8 (Unauthorized Software Prevention) | Access to Programs and Data | 802.1X authentication logs · Device posture assessments · VLAN assignment records · Denied-connection reports |
+| **MDM + Zero Trust** | CC6.1 (Logical Access Controls) · CC6.7 (Data-in-Transit Protection) · CC6.8 (Unauthorized Software Prevention) | Program Change Management · Access to Programs and Data | Device compliance snapshots · Conditional access policy evaluations · Encryption status reports · App inventory audits |
+| **WIPS** | CC7.1 (Detection of Unauthorized Activity) · CC7.2 (Monitoring of System Components) | Computer Operations | Rogue AP detection logs · Wireless incident timelines · Automated containment records · RF environment baselines |
+
+> **Audit readiness note:** Each recommendation generates machine-readable logs suitable for SOC 2 Type II evidence packages. When combined, the three controls provide continuous monitoring evidence across all six CC6/CC7 criteria — the exact controls auditors examine for technology companies handling user data. For SOX compliance post-IPO, these same logs satisfy PCAOB expectations for IT general controls over financial reporting systems accessible via the corporate wireless network.
 
 ## Lessons Learned
 
