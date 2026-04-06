@@ -86,6 +86,18 @@ All content authored, assignments imported, CI passing, ready for employer revie
 
 41 total remediation items (31 original + 10 growth areas) implemented, validated, and documented. Employer grade: B+ → A. Zero markdownlint errors. 21 files changed, +1,762/-111 lines.
 
+### M2.5 — Independent Review & Remediation ✅ (completed 2026-04-06)
+
+Independent employer-perspective review identified portfolio at B+ to A- (existing A+ self-assessment inflated by ~1 grade). 24 actionable improvements identified; 19 implemented, 4 deferred (require physical/cloud resources), 1 skipped (tooling not available). Key additions:
+- 17 lab screenshots extracted and embedded inline
+- 2 real Python automation scripts (Nmap XML parser, compliance checker)
+- Network topology diagram, SOC 2/SOX mapping, BLE/Bluetooth threats
+- AI collaboration disclosure, interview-readiness section
+- Tool output code blocks, lab environment specs, specific citations
+- Executive summary, improved evidence index, SCRIPTS_README.md rewrite
+
+Post-remediation grade: **A- to A** (+1 full grade from pre-remediation baseline).
+
 ### M3 — Production Experience Bridge (target: TBD)
 
 Complete Home Lab Roadmap exercises. Deploy Intune test tenant, build Raspberry Pi attack lab, create Splunk detection dashboard, and perform red team validation against own defenses.

@@ -6,11 +6,12 @@ permalink: /evidence/
 
 # Evidence & Screenshots Index — Mobile Wireless Security
 
-Comprehensive evidence index for the Mobile Wireless Security portfolio. All artifacts are contained within the PDF submissions — visual evidence is embedded in the lab PDFs exported by the Jones & Bartlett LMS.
+Comprehensive evidence index for the Mobile Wireless Security portfolio. All artifacts are contained within the PDF submissions — visual evidence is embedded in the lab PDFs exported by the Jones & Bartlett LMS. Key screenshots have been extracted and embedded inline in [WEEKLY_LABS_SUMMARY.md](WEEKLY_LABS_SUMMARY.md) and are also available in the [`screenshots/`](screenshots/) directory.
 
 ## Table of Contents
 
 - [Lab Submissions](#lab-submissions)
+- [Extracted Screenshots](#extracted-screenshots)
 - [Capstone Deliverables](#capstone-deliverables)
 - [Scripts & Automation](#scripts--automation)
 - [Detailed Evidence Catalog](#detailed-evidence-catalog)
@@ -23,11 +24,36 @@ Comprehensive evidence index for the Mobile Wireless Security portfolio. All art
 
 ### Lab 3 — Wi-Fi Site Survey (Week 10)
 
-- [Lab03_WiFi_Site_Survey_Submission.pdf](assignments/Lab03_WiFi_Site_Survey_Submission.pdf) — 13+ screenshots spanning signal-level heatmaps, SIR analysis, PHY mode identification, frequency band comparison (2.4 GHz vs 5 GHz), dead zone documentation, and AP placement recommendations.
+- [Lab03_WiFi_Site_Survey_Submission.pdf](assignments/Lab03_WiFi_Site_Survey_Submission.pdf) — 15 screenshots spanning signal-level heatmaps, SIR analysis, PHY mode identification, frequency band comparison (2.4 GHz vs 5 GHz), dead zone documentation, and AP placement recommendations.
 
 ### Lab 5 — Mobile Device Fingerprinting (Week 12)
 
-- [Lab05_Mobile_Device_Fingerprinting_Submission.pdf](assignments/Lab05_Mobile_Device_Fingerprinting_Submission.pdf) — 10+ screenshots covering Wireshark TTL captures, Nmap `-O` scan results, p0f Android 9.x passive identification, ClientJS browser fingerprints (Chrome + Firefox), User-Agent string comparison, and Cover Your Tracks cookie analysis.
+- [Lab05_Mobile_Device_Fingerprinting_Submission.pdf](assignments/Lab05_Mobile_Device_Fingerprinting_Submission.pdf) — 16 screenshots covering Wireshark TTL captures, Nmap `-O` scan results, p0f Android 9.x passive identification, ClientJS browser fingerprints (Chrome + Firefox), User-Agent string comparison, and Cover Your Tracks cookie analysis.
+
+## Extracted Screenshots
+
+Key screenshots have been extracted from the lab PDFs at 150 DPI and are available in the [`screenshots/`](screenshots/) directory. These are embedded inline in [WEEKLY_LABS_SUMMARY.md](WEEKLY_LABS_SUMMARY.md) with captions and analysis context.
+
+| File | Lab | Content |
+|---|---|---|
+| `lab01_ghostapd_baseline.png` | Lab 1 | GHostAPd default AP configuration (open auth, no encryption) |
+| `lab01_wpa2_config.png` | Lab 1 | WPA2-PSK/CCMP configuration applied |
+| `lab01_mac_acl.png` | Lab 1 | MAC address ACL whitelist enforcement |
+| `lab01_linssid_scan.png` | Lab 1 | LinSSID wireless environment scan results |
+| `lab01_tx_power.png` | Lab 1 | Transmit power reduction (100 → 50 mW) |
+| `lab01_kismet_decloak.png` | Lab 1 | Kismet hidden SSID decloaking |
+| `lab03_heatmap_5ghz.png` | Lab 3 | 5 GHz signal strength heatmap |
+| `lab03_heatmap_2_4ghz.png` | Lab 3 | 2.4 GHz signal strength heatmap |
+| `lab03_sir_analysis.png` | Lab 3 | Signal-to-Interference Ratio analysis |
+| `lab03_dead_zone.png` | Lab 3 | Coverage dead zone identification |
+| `lab03_phy_mode.png` | Lab 3 | PHY mode (802.11n/ac) identification |
+| `lab05_wireshark_ttl.png` | Lab 5 | Wireshark TTL analysis for OS fingerprinting |
+| `lab05_p0f_passive.png` | Lab 5 | p0f passive OS identification (Android 9.x) |
+| `lab05_nmap_os.png` | Lab 5 | Nmap active OS detection results |
+| `lab05_clientjs.png` | Lab 5 | ClientJS browser fingerprinting output |
+| `lab05_ua_comparison.png` | Lab 5 | User-Agent string comparison (Chrome vs Firefox) |
+
+> **Extraction tool:** [`scripts/extract_screenshots.py`](scripts/extract_screenshots.py) — Python script using PyMuPDF for full-page rendering at 150 DPI.
 
 ## Capstone Deliverables
 
@@ -64,7 +90,7 @@ Comprehensive evidence index for the Mobile Wireless Security portfolio. All art
 | 11 | Probe request capture — `youcantseeme` | Screenshot | PNL leakage from client probing hidden network |
 | 12-21 | Additional GHostAPd config screens, channel analysis, signal measurements | Screenshots | Progressive hardening documentation |
 
-### Lab 3 Evidence (13+ items in PDF)
+### Lab 3 Evidence (15 items in PDF)
 
 | # | Evidence Description | Type | Key Finding |
 |---|---|---|---|
@@ -78,8 +104,9 @@ Comprehensive evidence index for the Mobile Wireless Security portfolio. All art
 | 8 | Dead zone — AFSI-WPA at -93 dBm | Screenshot | BSSID 2C:30:33:11:22:33, worst signal |
 | 9 | PHY mode identification — 802.11n vs 802.11ac | Screenshot | NETGEAR01 = n, NETGEAR01-5G = ac |
 | 10-13 | Additional sample point measurements, DIRECT- SSID interference | Screenshots | Miracast/Wi-Fi Direct sources identified |
+| 14-15 | AP channel analysis, coverage boundary documentation | Screenshots | Coverage perimeter validated against floor plan |
 
-### Lab 5 Evidence (10+ items in PDF)
+### Lab 5 Evidence (16 items in PDF)
 
 | # | Evidence Description | Type | Key Finding |
 |---|---|---|---|
@@ -93,6 +120,7 @@ Comprehensive evidence index for the Mobile Wireless Security portfolio. All art
 | 8 | User-Agent string — Firefox/Android 9 | Output | `Gecko/[v] · Firefox/[v]` |
 | 9 | User-Agent string — Edge/Windows | Output | Dual `Chrome/` + `Edg/` Chromium tokens |
 | 10 | Cover Your Tracks — cookie analysis | Screenshot | Browser tracking protection assessment |
+| 11-16 | Additional fingerprint comparisons, network scan summaries, traffic analysis views | Screenshots | Cross-browser and cross-tool validation |
 
 ### Capstone Evidence
 

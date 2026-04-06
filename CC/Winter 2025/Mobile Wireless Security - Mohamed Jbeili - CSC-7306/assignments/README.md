@@ -1,3 +1,9 @@
+---
+title: Assignments — Mobile Wireless Security (CSC-7306)
+description: Lab submissions and capstone deliverables for the CSC-7306 Mobile Wireless Security course portfolio.
+permalink: /assignments/
+---
+
 # Assignments — Mobile Wireless Security (CSC-7306)
 
 This directory contains sanitized lab submissions and capstone deliverables.

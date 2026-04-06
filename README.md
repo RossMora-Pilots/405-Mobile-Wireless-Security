@@ -343,9 +343,33 @@ Concrete steps to bridge from academic exercises to demonstrable production expe
 
 **Availability:** Actively seeking entry-level roles in wireless security analysis, mobile device security administration, or BYOD/MDM engineering. Open to internship, co-op, or junior analyst positions.
 
+## Prepared to Discuss
+
+Topics I can speak to in depth during a technical interview:
+
+| Topic | Depth | Portfolio Evidence |
+|---|---|---|
+| WPA2/WPA3 encryption mechanics (SAE, PMF, CCMP) | Can explain protocol handshakes and why WPA3 mitigates KRACK/Dragonblood | [Threat Model](CC/Winter%202025/Mobile%20Wireless%20Security%20-%20Mohamed%20Jbeili%20-%20CSC-7306/WIRELESS_THREAT_MODEL.md), [Lab 1](CC/Winter%202025/Mobile%20Wireless%20Security%20-%20Mohamed%20Jbeili%20-%20CSC-7306/WEEKLY_LABS_SUMMARY.md#lab-1--securing-a-wireless-network-from-wardriving-attacks) |
+| Site survey methodology (SIR vs RSSI) | Can explain why -70 dBm with -25 dB SIR is unusable and how to fix it | [Lab 3 analysis](CC/Winter%202025/Mobile%20Wireless%20Security%20-%20Mohamed%20Jbeili%20-%20CSC-7306/WEEKLY_LABS_SUMMARY.md#lab-3--conducting-a-wi-fi-site-survey) |
+| Passive vs active reconnaissance tradeoffs | Can explain p0f invisibility, Nmap noise signatures, and when to use each | [Lab 5 analysis](CC/Winter%202025/Mobile%20Wireless%20Security%20-%20Mohamed%20Jbeili%20-%20CSC-7306/WEEKLY_LABS_SUMMARY.md#lab-5--fingerprinting-mobile-devices) |
+| BYOD/MDM architecture (Intune, NAC, Zero Trust) | Can design a tiered BYOD policy with 802.1X, conditional access, and enrollment workflow | [BYOD Framework](CC/Winter%202025/Mobile%20Wireless%20Security%20-%20Mohamed%20Jbeili%20-%20CSC-7306/BYOD_POLICY_FRAMEWORK.md) |
+| Cyber Kill Chain applied to wireless attacks | Can map specific wireless TTPs to each phase and identify which controls break which phase | [Kill Chain Analysis](CC/Winter%202025/Mobile%20Wireless%20Security%20-%20Mohamed%20Jbeili%20-%20CSC-7306/CYBER_KILL_CHAIN_ANALYSIS.md) |
+| STRIDE threat modeling for wireless/mobile | Can explain the distribution (InfoDisc dominates, zero Repudiation) and why | [Threat Model](CC/Winter%202025/Mobile%20Wireless%20Security%20-%20Mohamed%20Jbeili%20-%20CSC-7306/WIRELESS_THREAT_MODEL.md#stride-summary) |
+| NAC vendor selection (ISE vs ClearPass vs Forescout) | Can articulate tradeoffs for a 60-employee BYOD-heavy SMB | [Capstone](CC/Winter%202025/Mobile%20Wireless%20Security%20-%20Mohamed%20Jbeili%20-%20CSC-7306/CASE_STUDY_CAPSTONE.md#strategic-recommendations) |
+
 ## Portfolio Context
 
 This portfolio was developed as part of Cambrian College's Postgraduate Cybersecurity Certificate program (Winter 2025). All narrative documents, threat analysis, scripts, and diagrams are original student work. PDF submissions were exported from the Jones & Bartlett Learning LMS and contain embedded lab screenshots. The repository is published on GitHub to demonstrate version control practices, CI/CD hygiene, and professional documentation skills alongside the technical security content.
+
+## AI Collaboration Disclosure
+
+This portfolio was constructed with AI assistance (GitHub Copilot). Specifically:
+
+- **AI-assisted:** Document structuring, Mermaid diagram syntax, formatting consistency, cross-referencing between documents, and remediation tracking
+- **Student-authored:** All lab work, PDF submissions, case study analysis, threat modeling decisions, vendor selection rationale, and technical conclusions
+- **Original coursework:** All PDF submissions in `assignments/` are unmodified exports from the Jones & Bartlett LMS, submitted during the Winter 2025 term
+
+The underlying knowledge, analytical judgments, and security recommendations reflect coursework completed under instructor Mohamed Jbeili. AI tools were used to organize and present that knowledge professionally — similar to using a word processor's formatting features, but more capable. I can explain and defend every technical claim, framework application, and design decision in this portfolio in a live conversation.
 
 ## References
 

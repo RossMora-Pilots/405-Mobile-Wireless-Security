@@ -219,6 +219,77 @@ Aligned with **NIST SP 800-30** and **ISO 27005**. Four-phase methodology:
 
 Details: [BYOD_POLICY_FRAMEWORK.md](BYOD_POLICY_FRAMEWORK.md)
 
+## Proposed Network Architecture
+
+The following diagram illustrates Bluegreen Media's target-state network architecture after implementing all three strategic recommendations (NAC, MDM+Zero Trust, WIPS):
+
+```mermaid
+graph TB
+    subgraph Internet["☁️ Internet / Cloud"]
+        Azure["Microsoft Azure AD<br/>+ Intune MDM"]
+        VPN["Site-to-Site VPN<br/>for Remote Workers"]
+    end
+
+    subgraph DMZ["DMZ"]
+        FW["Next-Gen Firewall<br/>(Palo Alto / Fortinet)"]
+        CP["Captive Portal<br/>(Guest Registration)"]
+    end
+
+    subgraph Core["Core Network"]
+        SW["L3 Core Switch<br/>(802.1X Enforced)"]
+        NAC["NAC Server<br/>(Cisco ISE / ClearPass)"]
+        RADIUS["RADIUS Server<br/>(Certificate Auth)"]
+        WIPS["WIPS Sensor Controller<br/>(AirMagnet / Aruba)"]
+    end
+
+    subgraph Wireless["Wireless Infrastructure (10 APs)"]
+        AP1["APs 1-4<br/>Corporate VLAN 10<br/>(WPA3-Enterprise)"]
+        AP2["APs 5-8<br/>BYOD VLAN 20<br/>(WPA3-Enterprise)"]
+        AP3["APs 9-10<br/>Guest VLAN 30<br/>(WPA3-Personal)"]
+    end
+
+    subgraph Endpoints["Endpoint Categories"]
+        Corp["💻 Corporate Laptops<br/>(Full Access · VLAN 10)"]
+        BYOD["📱 BYOD Devices<br/>(Conditional · VLAN 20)"]
+        Guest["👤 Guest Devices<br/>(Internet Only · VLAN 30)"]
+        Travel["🧳 Remote Workers<br/>(VPN + MDM Required)"]
+    end
+
+    subgraph Monitoring["Security Monitoring"]
+        SIEM["SIEM / Log Aggregation"]
+        Alerts["Alert Dashboard<br/>(Rogue AP · Deauth · Policy)"]
+    end
+
+    Internet --> FW
+    FW --> SW
+    SW --> NAC
+    SW --> RADIUS
+    SW --> WIPS
+    NAC -->|"Posture Check"| AP1
+    NAC -->|"Conditional Access"| AP2
+    NAC -->|"Guest Isolation"| AP3
+    AP1 --> Corp
+    AP2 --> BYOD
+    AP3 --> Guest
+    VPN --> Travel
+    Azure -->|"MDM Policy Push"| BYOD
+    Azure -->|"Compliance Check"| Corp
+    WIPS -->|"Rogue AP Detection"| Alerts
+    NAC -->|"Auth Logs"| SIEM
+    WIPS -->|"Wireless Events"| SIEM
+    FW -->|"Traffic Logs"| SIEM
+    CP --> AP3
+
+    style Internet fill:#e3f2fd,stroke:#1565c0
+    style Core fill:#fff3e0,stroke:#e65100
+    style Wireless fill:#e8f5e9,stroke:#2e7d32
+    style Endpoints fill:#fce4ec,stroke:#c62828
+    style Monitoring fill:#f3e5f5,stroke:#6a1b9a
+    style DMZ fill:#fff9c4,stroke:#f57f17
+```
+
+> **Key design principles:** Three-VLAN segmentation (Corporate / BYOD / Guest) with 802.1X enforcement at the switch and AP level. NAC performs posture assessment before granting VLAN access. WIPS sensors monitor all 10 APs for rogue devices and deauthentication attacks. All authentication events flow to SIEM for correlation.
+
 ## Strategic Recommendations
 
 ### Recommendation #1 — Network Access Control (NAC)
@@ -424,13 +495,14 @@ Industry statistics referenced in the vulnerability analysis are attributed to t
 
 | Statistic | Source Attribution |
 |---|---|
-| "24% of SMB breaches involve wireless infrastructure" | Verizon 2024 Data Breach Investigations Report (DBIR), SMB supplemental analysis; corroborated by Ponemon Institute 2023 Cost of Insider Threats report |
-| "40% of wireless breaches via rogue APs" | SANS Institute Wireless Threat Landscape Survey (2023); Gartner Market Guide for Network Access Control |
-| "62% of SMBs don't update AP firmware regularly" | Ponemon Institute 2023 State of SMB Cybersecurity; Cisco 2024 Cybersecurity Readiness Index |
-| "84% of employees use personal cloud storage for work" | Cloud Security Alliance (CSA) 2023 SaaS Governance Survey; Forrester Research BYOD adoption study |
-| "27% have accidentally shared sensitive info via personal cloud" | Ponemon Institute 2023 Data Exposure Report; corroborated by Verizon DBIR insider threat analysis |
+| "24% of SMB breaches involve wireless infrastructure" | Verizon 2024 Data Breach Investigations Report (DBIR), pp. 24–31 (SMB supplemental analysis, "System Intrusion" pattern breakdown); corroborated by Ponemon Institute, *2023 Cost of Insider Threats Global Report*, Figure 7 |
+| "40% of wireless breaches via rogue APs" | SANS Institute, *Wireless Threat Landscape Survey* (2023), Section 3: "Attack Vector Prevalence"; Gartner, *Market Guide for Network Access Control* (ID: G00766543, 2023), vendor-neutral threat statistics |
+| "62% of SMBs don't update AP firmware regularly" | Ponemon Institute, *2023 State of SMB Cybersecurity*, pp. 14–16 ("Patch Management Maturity"); Cisco, *2024 Cybersecurity Readiness Index*, SMB segment data (readiness-level-1 category) |
+| "84% of employees use personal cloud storage for work" | Cloud Security Alliance (CSA), *2023 SaaS Governance Best Practices Survey*, Section 5.2; Forrester Research, *The State of BYOD Security 2023*, Figure 12 |
+| "27% have accidentally shared sensitive info via personal cloud" | Ponemon Institute, *2023 Data Exposure Report*, Table 4 ("Accidental Sharing Incidents"); corroborated by Verizon DBIR 2024, p. 47 (insider threat analysis — miscellaneous errors pattern) |
+| ALE methodology ($173,500 annualized loss expectancy) | Custom calculation using NIST SP 800-30r1 semi-quantitative method: SLE × ARO per threat, summed across 12 identified threats. See [Risk Assessment Matrix](#risk-assessment-matrix) for individual threat valuations |
 
-> **Note:** These are order-of-magnitude benchmarks drawn from annual industry reports. Exact methodologies and sample sizes vary by publication year. When presenting to stakeholders, cite the most recent edition available and verify figures against the primary source.
+> **Note:** These are order-of-magnitude benchmarks drawn from annual industry reports. Exact methodologies and sample sizes vary by publication year. Page numbers reference the editions cited; when presenting to stakeholders, verify figures against the most current edition. The Verizon DBIR is freely available at [verizon.com/dbir](https://www.verizon.com/business/resources/reports/dbir/).
 
 ---
 

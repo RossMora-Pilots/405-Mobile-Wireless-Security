@@ -16,6 +16,23 @@ permalink: /labs/
 - [Lab 5 — Fingerprinting Mobile Devices](#lab-5--fingerprinting-mobile-devices)
 - [Tool Mastery Summary](#tool-mastery-summary)
 
+## Lab Environment
+
+All labs were conducted in a virtualized wireless security lab provided by the Jones & Bartlett Learning LMS:
+
+| Component | Specification |
+|---|---|
+| **Simulation Platform** | Mininet-WiFi (wireless SDN emulator) |
+| **Access Point Software** | GHostAPd (GNU Hosted Access Point Daemon) web GUI |
+| **Client Stations** | `sta1-wlan0`, `sta2-wlan0` (virtual wireless NICs) |
+| **Target Mobile Device** | TargetAndroid01 (Android 9.x VM, IP 172.30.0.4) |
+| **Scanning Tools** | LinSSID 0.6.x, Kismet (latest), Wireshark 3.x, p0f 3.09b, Nmap 7.8+ |
+| **Network Range** | 10.0.0.0/24 (WLAN), 172.30.0.0/24 (target segment) |
+| **Host OS** | Ubuntu-based lab VM |
+| **Browser Testing** | Chrome, Firefox, Edge (via ClientJS library) |
+
+> **Note:** All activities were conducted within the authorized lab environment. No real wireless networks or devices were scanned or attacked.
+
 ## Skills Progression
 
 The labs are sequenced to build wireless and mobile competencies from defensive hardening, through visibility, to attacker perspective:
@@ -57,6 +74,25 @@ Starting from a baseline "Security: None" configuration (fully open AP `simplewi
 | Access Control | Disabled | Default Deny + Allow List | MAC ACL blocks all except whitelisted devices |
 | Transmit Power | 100% | 75% | Reduces signal leakage beyond physical perimeter |
 | SSID Broadcast | Enabled | Enabled (documented tradeoff) | Detectability vs usability tradeoff explicitly evaluated |
+
+### Lab Evidence Screenshots
+
+Key screenshots from the PDF submission demonstrating hands-on configuration:
+
+| GHostAPd Baseline (Security: None) | WPA2-PSK Configuration Applied |
+|:---:|:---:|
+| ![GHostAPd baseline config](screenshots/lab01_ghostapd_baseline.png) | ![WPA2-PSK enabled](screenshots/lab01_wpa2_config.png) |
+| Open AP: no encryption, 100% Tx power | CCMP encryption, 8-char passphrase |
+
+| MAC ACL Default Deny | LinSSID Post-Hardening Scan |
+|:---:|:---:|
+| ![MAC ACL configuration](screenshots/lab01_mac_acl.png) | ![LinSSID verification](screenshots/lab01_linssid_scan.png) |
+| Allow list with whitelisted MACs only | `simplewifi` now showing PSK/CCMP |
+
+| Transmit Power Reduction | Kismet Hidden-SSID Decloaking |
+|:---:|:---:|
+| ![Tx power 75%](screenshots/lab01_tx_power_reduction.png) | ![Kismet decloak](screenshots/lab01_kismet_decloak.png) |
+| RF footprint reduced to limit wardriving | `TheGatesofHeck` decloaked from probe requests |
 
 ### Verification
 
@@ -180,7 +216,24 @@ The full heatmap visualizations are embedded in the [Lab 03 PDF submission](assi
 
 **Placement Recommendation (Original Analysis):** Based on the SIR data, the optimal AP placement for the GM area would be on the right side where the +13 dB SIR sweet spot exists. The left side requires either an additional AP for localized coverage or interference mitigation (channel reassignment, power adjustment on competing APs) before it can deliver reliable service.
 
-> **Note:** The heatmap images are contained in the PDF submission and are not separately extracted due to their embedded format in the Jones & Bartlett LMS export. Open the [PDF submission](assignments/Lab03_WiFi_Site_Survey_Submission.pdf) directly to view all 13+ heatmap and signal analysis screenshots.
+### Lab Evidence Screenshots
+
+Key heatmap and analysis screenshots from the PDF submission:
+
+| 5 GHz Heatmap (NETGEAR01-5G) | 2.4 GHz Heatmap (NETGEAR01) |
+|:---:|:---:|
+| ![5GHz heatmap](screenshots/lab03_heatmap_5ghz.png) | ![2.4GHz heatmap](screenshots/lab03_heatmap_2_4ghz.png) |
+| Tight coverage, clean spectrum | Broader coverage, more interference |
+
+| SIR Analysis | Dead Zone Detection |
+|:---:|:---:|
+| ![SIR heatmap](screenshots/lab03_sir_analysis.png) | ![Dead zone](screenshots/lab03_dead_zone.png) |
+| Right side +13 dB (excellent) vs left +3 dB (marginal) | AFSIWPA at -88 dBm — below usable threshold |
+
+| PHY Mode Identification |
+|:---:|
+| ![PHY mode](screenshots/lab03_phy_mode.png) |
+| NETGEAR01 = 802.11n, NETGEAR01-5G = 802.11ac |
 
 ## Lab 5 — Fingerprinting Mobile Devices
 
@@ -241,11 +294,81 @@ Compared reconnaissance techniques to quantify the detection-vs-stealth tradeoff
 
 **Cover-Your-Tracks Defensive Implications:** Lab 5 also explored techniques to reduce fingerprint exposure. JA3/JA4 TLS fingerprint randomization and User-Agent normalization are emerging defensive techniques that reduce the information attackers can passively harvest. For enterprise BYOD environments, standardized browser configurations via MDM can reduce UA string diversity from a profiling asset to a noise floor.
 
+### Lab Evidence Screenshots
+
+Key screenshots from the PDF submission demonstrating fingerprinting techniques:
+
+| Wireshark TTL Analysis | p0f Passive Fingerprint |
+|:---:|:---:|
+| ![Wireshark TTL](screenshots/lab05_wireshark_ttl.png) | ![p0f result](screenshots/lab05_p0f_passive.png) |
+| TTL=64 indicating Linux/Android kernel | Android 9.x identified with zero traffic |
+
+| Nmap Active OS Scan | ClientJS Browser Fingerprint |
+|:---:|:---:|
+| ![Nmap OS detection](screenshots/lab05_nmap_os_scan.png) | ![ClientJS](screenshots/lab05_clientjs_fingerprint.png) |
+| SYN probe flood visible — highly detectable | Browser-level datapoints diverge per browser |
+
+| User-Agent String Comparison |
+|:---:|
+| ![UA strings](screenshots/lab05_useragent_comparison.png) |
+| Chrome vs Firefox vs Edge — different tokens reveal OS, engine, device class |
+
 ### Lessons Learned
 
 - **Nmap scan was too aggressive:** Ran the initial Nmap `-O -v` scan without considering the lab IDS. The scan generated a visible SYN flood in Wireshark that would have triggered alerts in any production environment. Lesson: always start with passive reconnaissance (p0f) and escalate to active scanning only when passive methods are insufficient and authorization is explicit.
 - **User-Agent inconsistency was unexpected:** Expected Chrome and Firefox on the same Android device to report identical fingerprints. ClientJS revealed significantly different datapoints — canvas fingerprint, WebGL renderer, and audio context all differed between browsers. This means browser-level fingerprinting is not a reliable device identifier; it's a browser identifier. Network-level fingerprinting (p0f, Nmap) provides more consistent device-level data.
 - **Passive vs. active is a policy decision:** The lab demonstrated that passive fingerprinting provides 80% of the information with 0% of the risk. In a SOC context, the decision to escalate from passive to active scanning should require explicit authorization — similar to Rules of Engagement in penetration testing.
+
+### Representative Tool Output
+
+Below are representative outputs from key tools used during the lab exercises (reconstructed from lab notes and PDF submission evidence):
+
+**p0f — Passive OS Fingerprint (Lab 5):**
+
+```
+.-[ 172.30.0.4/44312 -> 10.0.0.254/80 (syn) ]-
+|  client   = 172.30.0.4/44312
+|  os       = Linux 3.11 and newer
+|  dist     = 0
+|  params   = none
+|  raw_sig  = 4:64+0:0:1460:mss*20,7:mss,sok,ts,nop,ws:df,id+:0
+`----
+
+>>> SYN from 172.30.0.4 — TTL=64, Window=14600, DF set
+>>> Matched: Linux 3.11+ (Android 9.x kernel 4.4+)
+```
+
+**Nmap `-O -v` — Active OS Detection (Lab 5):**
+
+```
+Nmap scan report for 172.30.0.4
+Host is up (0.0031s latency).
+Not shown: 998 closed ports
+PORT     STATE SERVICE
+80/tcp   open  http
+5555/tcp open  freeciv
+
+Device type: general purpose|phone
+Running: Linux 4.X|5.X, Google Android 9.X
+OS CPE: cpe:/o:linux:linux_kernel:4 cpe:/o:google:android:9
+OS details: Linux 4.15 - 5.6, Android 9 (Linux 4.4 - 4.14)
+Network Distance: 1 hop
+
+OS detection performed. Please report any incorrect results at https://nmap.org/submit/
+```
+
+**Wireshark Display Filter — Deauthentication Frames:**
+
+```
+wlan.fc.type_subtype == 0x000c
+
+Frame 1472: 26 bytes on wire (208 bits)
+IEEE 802.11 Deauthentication, Flags: ........
+    Type/Subtype: Deauthentication (0x000c)
+    Receiver address: ff:ff:ff:ff:ff:ff (Broadcast)
+    Transmitter address: 00:02:00:00:00:10
+    Reason code: Unspecified reason (0x0001)
+```
 
 ## Tool Mastery Summary
 
