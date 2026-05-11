@@ -16,6 +16,9 @@
 
 > 12-week term (8 instructor-led sessions) covering WLAN hardening, wireless site survey methodology, mobile device fingerprinting, and a capstone WLAN & Mobile Security Plan for a fictional SMB considering an IPO.
 
+
+> ✅ **Course complete (Winter 2025).** All assigned coursework delivered; this portfolio is the final published state.
+
 ---
 
 ## Professional Summary
